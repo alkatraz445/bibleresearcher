@@ -38,7 +38,18 @@ import it.skrape.fetcher.*
 //import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
 
 
+class Werset(var text :String, var nr : String)
+{
+    init {
+    }
+
+    fun printWerset() : Unit
+    {
+        Log.d("Werset print", "" + nr + ": " + text)
+    }
+}
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +61,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MyApp() {
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(1) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Display the selected tab content
@@ -76,14 +87,29 @@ fun MyApp() {
 
 @Composable
 fun Tab1() {
+//    val quotes: MutableList<Werset> = ArrayList()
+
     skrape(HttpFetcher) {
         // make an HTTP GET request to the specified URL
         request {
-            url = "https://quotes.toscrape.com/"
+            url = "http://biblia-online.pl/Biblia/Tysiaclecia"
         }
         response {
             htmlDocument {
-                Log.d("body", html )
+                "div.vr"{
+                    findAll{
+                        forEach{
+                            val text = it.findFirst(".vtbl-txt").text
+                            val nr = it.findFirst(".vtbl-num").text
+//                                    Log.d("werset: ",nr + ": " + text)
+                            val werset = Werset(
+                                text = text,
+                                nr = nr
+                            )
+                            werset.printWerset()
+                        }
+                    }
+                }
             }
         }
     }
@@ -99,23 +125,7 @@ fun Tab3() {
     Text(text = "Content for Tab 3")
 }
 
-//private suspend fun fetchData() : String
-//{
-//    skrape(HttpFetcher)
-//    {
-//        request {
-//            url = "http://biblia-online.pl/Biblia/Tysiaclecia"
-//        }
-//        response {
-//            htmlDocument {
-//                div{
-//                    withId = "vt1"
-//                    findFirst(text)
-//                }
-//                }
-//            }
-//        }
-//}
+
 
 
 
