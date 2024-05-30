@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -37,7 +39,10 @@ import it.skrape.fetcher.*
 
 //import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
 
+class Bible()
+{
 
+}
 class Werset(var text :String, var nr : String)
 {
     init {
@@ -87,12 +92,13 @@ fun MyApp() {
 
 @Composable
 fun Tab1() {
-//    val quotes: MutableList<Werset> = ArrayList()
-
+    val rozdzial: MutableList<Werset> = ArrayList()
+    var werset = Werset(text = "", nr = "")
+    var textOnScreen = ""
     skrape(HttpFetcher) {
         // make an HTTP GET request to the specified URL
         request {
-            url = "http://biblia-online.pl/Biblia/Tysiaclecia"
+            url = "http://biblia-online.pl/Biblia/Tysiaclecia/Ksiega-Rodzaju/1/1"
         }
         response {
             htmlDocument {
@@ -101,11 +107,12 @@ fun Tab1() {
                         forEach{
                             val text = it.findFirst(".vtbl-txt").text
                             val nr = it.findFirst(".vtbl-num").text
-//                                    Log.d("werset: ",nr + ": " + text)
-                            val werset = Werset(
+                            textOnScreen += nr+ ": " + text + "\n"
+                            werset = Werset(
                                 text = text,
                                 nr = nr
                             )
+                            rozdzial.add(werset)
                             werset.printWerset()
                         }
                     }
@@ -113,6 +120,9 @@ fun Tab1() {
             }
         }
     }
+    Text(modifier = Modifier
+        .verticalScroll(rememberScrollState()),
+        text = textOnScreen)
 }
 
 @Composable
