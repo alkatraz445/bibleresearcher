@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -171,23 +172,31 @@ fun Tab2() {
             NavBar(design = Design.Dom,
                 iconHome = {
                 Icon(
+                    modifier = Modifier
+                        .offset(4.dp, 2.dp),
                     painter = painterResource(R.drawable.nav_bar_home),
                     contentDescription = null)
             },
                 iconPismo = {
                     Icon(
+                        modifier = Modifier
+                            .offset(1.dp, 3.dp),
                         painter = painterResource(R.drawable.nav_bar_import_contacts),
                         contentDescription = null,
                     )
                 },
                 iconZakladki = {
                     Icon(
+                        modifier = Modifier
+                            .offset(4.dp, 2.dp),
                         painter = painterResource(R.drawable.nav_bar_icon1),
                         contentDescription = null,
                     )
                 },
                 iconUstawienia = {
                     Icon(
+                        modifier = Modifier
+                            .offset(1.dp, 2.dp),
                         painter = painterResource(R.drawable.nav_bar_icon2),
                         contentDescription = null,
                     )
