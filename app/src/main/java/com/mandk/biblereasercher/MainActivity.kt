@@ -13,16 +13,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import com.mandk.biblereasercher.navbar.Design
+import com.mandk.biblereasercher.navbar.NavBar
+import com.mandk.biblereasercher.navigationbar.NavigationBar
+import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
 import it.skrape.core.htmlDocument
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
@@ -41,7 +52,14 @@ import it.skrape.fetcher.*
 
 class Bible()
 {
-
+    val websiteForBible = listOf<String>(
+        "http://biblia-online.pl/Biblia/Tysiaclecia/",
+        "http://biblia-online.pl/Biblia/UwspolczesnionaBibliaGdanska/",
+        "http://biblia-online.pl/Biblia/Warszawska/",
+        "http://biblia-online.pl/Biblia/JakubaWujka/",
+        "http://biblia-online.pl/Biblia/Brzeska/")
+    init {
+    }
 }
 class Werset(var text :String, var nr : String)
 {
@@ -60,7 +78,10 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            MyApp()
+            BibleResearcherTheme()
+            {
+                MyApp()
+            }
         }
     }
 }
@@ -68,13 +89,14 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     var selectedTab by remember { mutableIntStateOf(1) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        // Display the selected tab content
-        when (selectedTab) {
-            0 -> Tab1()
-            1 -> Tab2()
-            2 -> Tab3()
-        }
+    BibleResearcherTheme() {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Display the selected tab content
+            when (selectedTab) {
+                0 -> Tab1()
+                1 -> Tab2()
+                2 -> Tab3()
+            }
             Row(modifier = Modifier.fillMaxSize()) {
                 Button(onClick = { selectedTab = 0 }) {
                     Text(text = "Tab 1")
@@ -85,8 +107,9 @@ fun MyApp() {
                 Button(onClick = { selectedTab = 2 }) {
                     Text(text = "Tab 3")
                 }
+            }
+            // Tab buttons
         }
-        // Tab buttons
     }
 }
 
@@ -120,14 +143,59 @@ fun Tab1() {
             }
         }
     }
-    Text(modifier = Modifier
-        .verticalScroll(rememberScrollState()),
-        text = textOnScreen)
+    BibleResearcherTheme()
+    {
+        Surface(modifier = Modifier
+            .fillMaxWidth())
+        {
+            Text(modifier = Modifier
+                .verticalScroll(rememberScrollState()),
+                text = textOnScreen)
+        }
+    }
+
+
 }
 
 @Composable
 fun Tab2() {
-    Text(text = "Content for Tab 2")
+    BibleResearcherTheme()
+    {
+        Column (modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+            horizontalAlignment = Alignment.End){
+            Row {
+                Text(text = "Content for Tab 2")
+            }
+            NavBar(design = Design.Dom,
+                iconHome = {
+                Icon(
+                    painter = painterResource(R.drawable.nav_bar_home),
+                    contentDescription = null)
+            },
+                iconPismo = {
+                    Icon(
+                        painter = painterResource(R.drawable.nav_bar_import_contacts),
+                        contentDescription = null,
+                    )
+                },
+                iconZakladki = {
+                    Icon(
+                        painter = painterResource(R.drawable.nav_bar_icon1),
+                        contentDescription = null,
+                    )
+                },
+                iconUstawienia = {
+                    Icon(
+                        painter = painterResource(R.drawable.nav_bar_icon2),
+                        contentDescription = null,
+                    )
+                })
+        }
+    }
+
+
 }
 
 @Composable
