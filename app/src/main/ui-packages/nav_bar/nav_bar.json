@@ -1,0 +1,2578 @@
+{
+  "name": "nav_bar",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "p1e4nIS9akAlOxc0yu2daY",
+    "node": "54868:498",
+    "version": "5897447223",
+    "component-id": "98c6d524103b90c8951016407e492b3790e1810d"
+  },
+  "default": "ustawienia",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Navigation bar"
+      },
+      {
+        "type": "group",
+        "id": "Segment 1"
+      },
+      {
+        "type": "group",
+        "id": "Segment 2"
+      },
+      {
+        "type": "group",
+        "id": "Segment 3"
+      },
+      {
+        "type": "group",
+        "id": "Segment 4"
+      },
+      {
+        "type": "group",
+        "id": "icon-container"
+      },
+      {
+        "type": "text",
+        "id": "label-text"
+      },
+      {
+        "type": "group",
+        "id": "state-layer"
+      },
+      {
+        "type": "group",
+        "id": "Icon"
+      },
+      {
+        "type": "vector",
+        "id": "Bounding box"
+      },
+      {
+        "type": "vector",
+        "id": "home"
+      },
+      {
+        "type": "group",
+        "id": "icon-container1"
+      },
+      {
+        "type": "text",
+        "id": "label-text1"
+      },
+      {
+        "type": "group",
+        "id": "state-layer1"
+      },
+      {
+        "type": "group",
+        "id": "Icon1"
+      },
+      {
+        "type": "group",
+        "id": "icon-container2"
+      },
+      {
+        "type": "text",
+        "id": "label-text2"
+      },
+      {
+        "type": "group",
+        "id": "state-layer2"
+      },
+      {
+        "type": "group",
+        "id": "Icon2"
+      },
+      {
+        "type": "group",
+        "id": "icon-container3"
+      },
+      {
+        "type": "text",
+        "id": "label-text3"
+      },
+      {
+        "type": "group",
+        "id": "state-layer3"
+      },
+      {
+        "type": "group",
+        "id": "Icon3"
+      },
+      {
+        "type": "vector",
+        "id": "icon"
+      },
+      {
+        "type": "vector",
+        "id": "Bounding box1"
+      },
+      {
+        "type": "vector",
+        "id": "import_contacts"
+      }
+    ],
+    "modes": {
+      "ustawienia": {
+        "rules": [
+          {
+            "id": "top_level",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Navigation bar"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Navigation bar",
+            "padding": {
+              "left": 8.0,
+              "right": 8.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 80.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Segment 1",
+              "Segment 2",
+              "Segment 3",
+              "Segment 4"
+            ],
+            "item-spacing": 8.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
+            },
+            "clip-content": false
+          },
+          {
+            "id": "Segment 1",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container",
+              "label-text"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 2",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container1",
+              "label-text1"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 3",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container2",
+              "label-text2"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 4",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container3",
+              "label-text3"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "icon-container",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Dom",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickDom",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon",
+            "is-structured": false,
+            "children": [
+              "Bounding box",
+              "home"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Bounding box",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "id": "home",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home.svg"
+          },
+          {
+            "id": "icon-container1",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer1"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Pismo",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer1",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickPismo",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon1"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon1",
+            "is-structured": false,
+            "children": "$icon_pismo",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container2",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer2"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Zakładki",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer2",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickZakladki",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon2"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon2",
+            "is-structured": false,
+            "children": "$icon_zakladki",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container3",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "state-layer3"
+            ],
+            "background-color": "^md.sys.color.secondary-container"
+          },
+          {
+            "id": "label-text3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": 600.0,
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Ustawienia",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": 12.0,
+            "letter-spacing": 0.5,
+            "line-height": 1.3333332824707032
+          },
+          {
+            "id": "state-layer3",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickUstawienia",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon3"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Icon3",
+            "is-structured": false,
+            "children": [
+              "icon"
+            ]
+          },
+          {
+            "id": "icon",
+            "margin": {
+              "left": 2.27069091796875,
+              "top": 2.0,
+              "right": 2.2750625610351562,
+              "bottom": 2.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon.svg"
+          }
+        ]
+      },
+      "zakladki": {
+        "rules": [
+          {
+            "id": "top_level",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Navigation bar"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Navigation bar",
+            "padding": {
+              "left": 8.0,
+              "right": 8.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 80.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Segment 1",
+              "Segment 2",
+              "Segment 3",
+              "Segment 4"
+            ],
+            "item-spacing": 8.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
+            },
+            "clip-content": false
+          },
+          {
+            "id": "Segment 1",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container",
+              "label-text"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 2",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container1",
+              "label-text1"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 3",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container2",
+              "label-text2"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 4",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container3",
+              "label-text3"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "icon-container",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Dom",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickDom",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon",
+            "is-structured": false,
+            "children": [
+              "Bounding box",
+              "home"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Bounding box",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "id": "home",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home1.svg"
+          },
+          {
+            "id": "icon-container1",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer1"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Pismo",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer1",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickPismo",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon1"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon1",
+            "is-structured": false,
+            "children": "$icon_pismo",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container2",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "state-layer2"
+            ],
+            "background-color": "^md.sys.color.secondary-container"
+          },
+          {
+            "id": "label-text2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": 600.0,
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Zakładki",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": 12.0,
+            "letter-spacing": 0.5,
+            "line-height": 1.3333332824707032
+          },
+          {
+            "id": "state-layer2",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickZakladki",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon2"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Icon2",
+            "is-structured": false,
+            "children": [
+              "icon"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "icon",
+            "margin": {
+              "left": 5.0,
+              "top": 3.0,
+              "right": 5.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon1.svg"
+          },
+          {
+            "id": "icon-container3",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer3"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Ustawienia",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer3",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickUstawienia",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon3"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon3",
+            "is-structured": false,
+            "children": "$icon_ustawienia",
+            "clip-content": false
+          }
+        ]
+      },
+      "pismo": {
+        "rules": [
+          {
+            "id": "top_level",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Navigation bar"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Navigation bar",
+            "padding": {
+              "left": 8.0,
+              "right": 8.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 80.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Segment 1",
+              "Segment 2",
+              "Segment 3",
+              "Segment 4"
+            ],
+            "item-spacing": 8.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
+            },
+            "clip-content": false
+          },
+          {
+            "id": "Segment 1",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container",
+              "label-text"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 2",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container1",
+              "label-text1"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 3",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container2",
+              "label-text2"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 4",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container3",
+              "label-text3"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "icon-container",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Dom",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickDom",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon",
+            "is-structured": false,
+            "children": [
+              "Bounding box",
+              "home"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Bounding box",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "id": "home",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home2.svg"
+          },
+          {
+            "id": "icon-container1",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "state-layer1"
+            ],
+            "background-color": "^md.sys.color.secondary-container",
+            "clip-content": false
+          },
+          {
+            "id": "label-text1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": 600.0,
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Pismo",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": 12.0,
+            "letter-spacing": 0.5,
+            "line-height": 1.3333332824707032
+          },
+          {
+            "id": "state-layer1",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickPismo",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon1"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Icon1",
+            "is-structured": false,
+            "children": [
+              "Bounding box1",
+              "import_contacts"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Bounding box1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "id": "import_contacts",
+            "margin": {
+              "left": 1.0,
+              "top": 4.0,
+              "right": 1.0,
+              "bottom": 4.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "import_contacts2.svg"
+          },
+          {
+            "id": "icon-container2",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer2"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Zakładki",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer2",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickZakladki",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon2"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon2",
+            "is-structured": false,
+            "children": "$icon_zakladki",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container3",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer3"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Ustawienia",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer3",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickUstawienia",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon3"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon3",
+            "is-structured": false,
+            "children": "$icon_ustawienia",
+            "clip-content": false
+          }
+        ]
+      },
+      "dom": {
+        "rules": [
+          {
+            "id": "top_level",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Navigation bar"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Navigation bar",
+            "padding": {
+              "left": 8.0,
+              "right": 8.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 80.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Segment 1",
+              "Segment 2",
+              "Segment 3",
+              "Segment 4"
+            ],
+            "item-spacing": 8.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
+            },
+            "clip-content": false
+          },
+          {
+            "id": "Segment 1",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container",
+              "label-text"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 2",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container1",
+              "label-text1"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 3",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container2",
+              "label-text2"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "Segment 4",
+            "padding": {
+              "top": 12.0,
+              "bottom": 16.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "icon-container3",
+              "label-text3"
+            ],
+            "item-spacing": 4.0,
+            "clip-content": false
+          },
+          {
+            "id": "icon-container",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "state-layer"
+            ],
+            "background-color": "^md.sys.color.secondary-container"
+          },
+          {
+            "id": "label-text",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": 600.0,
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Dom",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": 12.0,
+            "letter-spacing": 0.5,
+            "line-height": 1.3333332824707032
+          },
+          {
+            "id": "state-layer",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickDom",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Icon",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 24.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 24.0
+              }
+            },
+            "is-structured": false,
+            "children": "$icon_home",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container1",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer1"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Pismo",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer1",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickPismo",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon1"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon1",
+            "is-structured": false,
+            "children": "$icon_pismo",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container2",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer2"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Zakładki",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer2",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickZakladki",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon2"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon2",
+            "is-structured": false,
+            "children": "$icon_zakladki",
+            "clip-content": false
+          },
+          {
+            "id": "icon-container3",
+            "border-radius": 16.0,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "state-layer3"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "label-text3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-medium.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Ustawienia",
+            "overflow": "visible",
+            "max-lines": -1,
+            "text-size": "^md.sys.typescale.label-medium.size",
+            "letter-spacing": "^md.sys.typescale.label-medium.tracking",
+            "line-height": "^md.sys.typescale.label-medium.line-height",
+            "typeface": "^md.sys.typescale.label-medium.font"
+          },
+          {
+            "id": "state-layer3",
+            "padding": {
+              "left": 20.0,
+              "top": 4.0,
+              "right": 20.0,
+              "bottom": 4.0
+            },
+            "tap-handler": "$onClickUstawienia",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 32.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Icon3"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Icon3",
+            "is-structured": false,
+            "children": "$icon_ustawienia",
+            "clip-content": false
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "onClickDom": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "onClickPismo": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "icon_pismo": {
+      "data-type": "list-item",
+      "required": false,
+      "description": ""
+    },
+    "onClickZakladki": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "icon_zakladki": {
+      "data-type": "list-item",
+      "required": false,
+      "description": ""
+    },
+    "onClickUstawienia": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "icon_ustawienia": {
+      "data-type": "list-item",
+      "required": false,
+      "description": ""
+    },
+    "icon_home": {
+      "data-type": "list-item",
+      "required": false,
+      "description": ""
+    }
+  },
+  "ambients": {
+    "md.sys.color.on-surface-variant": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.typescale.label-medium.font": {
+      "data-type": "typeface",
+      "description": null
+    },
+    "md.sys.typescale.label-medium.weight": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-medium.size": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-medium.tracking": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-medium.line-height": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.color.secondary-container": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.color.on-surface": {
+      "data-type": "color",
+      "description": null
+    }
+  },
+  "previews": [
+    {
+      "design": "ustawienia",
+      "size": {
+        "width": 360.0,
+        "height": 80.0
+      },
+      "parameters": {
+        "icon_pismo": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.0,
+              "top": 4.0,
+              "right": 1.0,
+              "bottom": 4.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "import_contacts.svg"
+          }
+        ],
+        "icon_ustawienia": [
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.998779296875,
+              "top": 1.760009765625,
+              "right": 1.9951515197753906,
+              "bottom": 1.749990463256836
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon2.svg"
+          }
+        ],
+        "icon_home": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home3.svg"
+          }
+        ]
+      },
+      "ambients": {
+        "md.sys.color.on-surface-variant": {
+          "alpha": 1.0,
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
+        },
+        "md.sys.typescale.label-medium.weight": 500.0,
+        "md.sys.typescale.label-medium.size": 12.0,
+        "md.sys.typescale.label-medium.tracking": 0.5,
+        "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
+        "md.sys.color.secondary-container": {
+          "alpha": 1.0,
+          "hue": 265.38461538461536,
+          "saturation": 0.10483870967741933,
+          "value": 0.9725490196078431
+        },
+        "md.sys.color.on-surface": {
+          "alpha": 1.0,
+          "hue": 264.0,
+          "saturation": 0.15625,
+          "value": 0.12549019607843137
+        }
+      }
+    },
+    {
+      "design": "zakladki",
+      "size": {
+        "width": 360.0,
+        "height": 80.0
+      },
+      "parameters": {
+        "icon_pismo": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.0,
+              "top": 4.0,
+              "right": 1.0,
+              "bottom": 4.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "import_contacts1.svg"
+          }
+        ],
+        "icon_ustawienia": [
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.998779296875,
+              "top": 1.760009765625,
+              "right": 1.9951515197753906,
+              "bottom": 1.749990463256836
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon2.svg"
+          }
+        ],
+        "icon_home": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home3.svg"
+          }
+        ]
+      },
+      "ambients": {
+        "md.sys.color.on-surface-variant": {
+          "alpha": 1.0,
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
+        },
+        "md.sys.typescale.label-medium.weight": 500.0,
+        "md.sys.typescale.label-medium.size": 12.0,
+        "md.sys.typescale.label-medium.tracking": 0.5,
+        "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
+        "md.sys.color.secondary-container": {
+          "alpha": 1.0,
+          "hue": 265.38461538461536,
+          "saturation": 0.10483870967741933,
+          "value": 0.9725490196078431
+        },
+        "md.sys.color.on-surface": {
+          "alpha": 1.0,
+          "hue": 264.0,
+          "saturation": 0.15625,
+          "value": 0.12549019607843137
+        }
+      }
+    },
+    {
+      "design": "pismo",
+      "size": {
+        "width": 360.0,
+        "height": 80.0
+      },
+      "parameters": {
+        "icon_pismo": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.0,
+              "top": 4.0,
+              "right": 1.0,
+              "bottom": 4.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "import_contacts.svg"
+          }
+        ],
+        "icon_ustawienia": [
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.998779296875,
+              "top": 1.760009765625,
+              "right": 1.9951515197753906,
+              "bottom": 1.749990463256836
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon3.svg"
+          }
+        ],
+        "icon_home": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home3.svg"
+          }
+        ]
+      },
+      "ambients": {
+        "md.sys.color.on-surface-variant": {
+          "alpha": 1.0,
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
+        },
+        "md.sys.typescale.label-medium.weight": 500.0,
+        "md.sys.typescale.label-medium.size": 12.0,
+        "md.sys.typescale.label-medium.tracking": 0.5,
+        "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
+        "md.sys.color.secondary-container": {
+          "alpha": 1.0,
+          "hue": 265.38461538461536,
+          "saturation": 0.10483870967741933,
+          "value": 0.9725490196078431
+        },
+        "md.sys.color.on-surface": {
+          "alpha": 1.0,
+          "hue": 264.0,
+          "saturation": 0.15625,
+          "value": 0.12549019607843137
+        }
+      }
+    },
+    {
+      "design": "dom",
+      "size": {
+        "width": 360.0,
+        "height": 80.0
+      },
+      "parameters": {
+        "icon_pismo": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.0,
+              "top": 4.0,
+              "right": 1.0,
+              "bottom": 4.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "import_contacts3.svg"
+          }
+        ],
+        "icon_ustawienia": [
+          {
+            "type": "vector",
+            "margin": {
+              "left": 1.998779296875,
+              "top": 1.760009765625,
+              "right": 1.9951515197753906,
+              "bottom": 1.749990463256836
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "icon4.svg"
+          }
+        ],
+        "icon_home": [
+          {
+            "type": "vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "type": "vector",
+            "margin": {
+              "left": 4.0,
+              "top": 3.0,
+              "right": 4.0,
+              "bottom": 3.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "vector-content": "home3.svg"
+          }
+        ]
+      },
+      "ambients": {
+        "md.sys.color.on-surface-variant": {
+          "alpha": 1.0,
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
+        },
+        "md.sys.typescale.label-medium.weight": 500.0,
+        "md.sys.typescale.label-medium.size": 12.0,
+        "md.sys.typescale.label-medium.tracking": 0.5,
+        "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
+        "md.sys.color.secondary-container": {
+          "alpha": 1.0,
+          "hue": 265.38461538461536,
+          "saturation": 0.10483870967741933,
+          "value": 0.9725490196078431
+        },
+        "md.sys.color.on-surface": {
+          "alpha": 1.0,
+          "hue": 264.0,
+          "saturation": 0.15625,
+          "value": 0.12549019607843137
+        }
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

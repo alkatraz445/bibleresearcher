@@ -1,6 +1,13 @@
+//plugins {
+//    alias(libs.plugins.android.application)
+//    alias(libs.plugins.jetbrains.kotlin.android)
+//
+//}
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.relay") version "0.3.12"
 }
 
 android {
@@ -33,6 +40,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -44,7 +52,9 @@ android {
     }
     packaging {
         resources {
+            excludes += "META-INF/DEPENDENCIES"
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "mozilla/public-suffix-list.txt"
         }
     }
 }
@@ -59,6 +69,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("it.skrape:skrapeit:1.3.0-alpha.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
