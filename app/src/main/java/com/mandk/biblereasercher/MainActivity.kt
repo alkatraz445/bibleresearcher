@@ -5,49 +5,45 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
+import com.example.compose.AppTheme
 import com.mandk.biblereasercher.navbar.Design
 import com.mandk.biblereasercher.navbar.NavBar
-import com.mandk.biblereasercher.navigationbar.NavigationBar
-import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
-import it.skrape.core.htmlDocument
+import com.mandk.biblereasercher.navbar.NavigationBarDom
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
-import it.skrape.fetcher.extract
 import it.skrape.fetcher.response
 import it.skrape.fetcher.skrape
-import it.skrape.selects.html5.div
-import it.skrape.selects.html5.h3
-import it.skrape.selects.html5.img
-import it.skrape.selects.html5.li
-import it.skrape.selects.html5.ol
-import it.skrape.core.*
-import it.skrape.fetcher.*
 
 //import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
 
@@ -79,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            BibleResearcherTheme()
+            AppTheme()
             {
                 MyApp()
             }
@@ -90,7 +86,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     var selectedTab by remember { mutableIntStateOf(1) }
 
-    BibleResearcherTheme() {
+    AppTheme() {
         Column(modifier = Modifier.fillMaxSize()) {
             // Display the selected tab content
             when (selectedTab) {
@@ -144,7 +140,7 @@ fun Tab1() {
             }
         }
     }
-    BibleResearcherTheme()
+    AppTheme()
     {
         Surface(modifier = Modifier
             .fillMaxWidth())
@@ -160,47 +156,69 @@ fun Tab1() {
 
 @Composable
 fun Tab2() {
-    BibleResearcherTheme()
+    AppTheme()
     {
         Column (modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-            horizontalAlignment = Alignment.End){
-            Row {
-                Text(text = "Content for Tab 2")
+            .fillMaxHeight(0.5f)
+            .padding(0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top)
+        {
+            Row(modifier = Modifier.fillMaxWidth())
+            {
+
             }
-            NavBar(design = Design.Dom,
-                iconHome = {
-                Icon(
-                    modifier = Modifier
-                        .offset(4.dp, 2.dp),
-                    painter = painterResource(R.drawable.nav_bar_home),
-                    contentDescription = null)
-            },
-                iconPismo = {
-                    Icon(
-                        modifier = Modifier
-                            .offset(1.dp, 3.dp),
-                        painter = painterResource(R.drawable.nav_bar_import_contacts),
-                        contentDescription = null,
-                    )
-                },
-                iconZakladki = {
-                    Icon(
-                        modifier = Modifier
-                            .offset(4.dp, 2.dp),
-                        painter = painterResource(R.drawable.nav_bar_icon1),
-                        contentDescription = null,
-                    )
-                },
-                iconUstawienia = {
-                    Icon(
-                        modifier = Modifier
-                            .offset(1.dp, 2.dp),
-                        painter = painterResource(R.drawable.nav_bar_icon2),
-                        contentDescription = null,
-                    )
-                })
+
+        }
+
+        Column (modifier = Modifier
+            .fillMaxHeight(0.5f)
+            .padding(0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom){
+            Row (modifier = Modifier.fillMaxWidth()){
+
+            }
+            Spacer(modifier = Modifier.padding(16.dp))
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center){
+                NavBar(modifier = Modifier
+                    .fillMaxWidth()
+                    ,
+                    design = Design.Dom,
+                    iconHome = {
+                        Icon(
+                            modifier = Modifier
+                                .offset(4.dp, 2.dp),
+                            painter = painterResource(R.drawable.nav_bar_home3),
+                            contentDescription = null)
+                    },
+                    iconPismo = {
+                        Icon(
+                            modifier = Modifier
+                                .offset(1.dp, 3.dp),
+                            painter = painterResource(R.drawable.nav_bar_import_contacts),
+                            contentDescription = null,
+                        )
+                    },
+                    iconZakladki = {
+                        Icon(
+                            modifier = Modifier
+                                .offset(4.dp, 2.dp),
+                            painter = painterResource(R.drawable.nav_bar_icon1),
+                            contentDescription = null,
+                        )
+                    },
+                    iconUstawienia = {
+                        Icon(
+                            modifier = Modifier
+                                .offset(1.dp, 2.dp),
+                            painter = painterResource(R.drawable.nav_bar_icon2),
+                            contentDescription = null,
+                        )
+                    })
+            }
         }
     }
 
@@ -209,8 +227,8 @@ fun Tab2() {
 
 @Composable
 fun Tab3() {
-    Text(text = "Content for Tab 3")
-}
+
+    }
 
 
 

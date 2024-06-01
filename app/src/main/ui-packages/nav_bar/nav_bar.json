@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "p1e4nIS9akAlOxc0yu2daY",
     "node": "54868:498",
-    "version": "5895081374",
+    "version": "5897447223",
     "component-id": "98c6d524103b90c8951016407e492b3790e1810d"
   },
   "default": "ustawienia",
@@ -128,15 +128,14 @@
             "id": "top_level",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Navigation bar"
             ],
@@ -150,8 +149,8 @@
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 360.0
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
@@ -159,8 +158,6 @@
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Segment 1",
               "Segment 2",
@@ -170,9 +167,9 @@
             "item-spacing": 8.0,
             "background-color": {
               "alpha": 1.0,
-              "hue": 275.9999999999999,
-              "saturation": 0.04048582995951414,
-              "value": 0.9686274509803922
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
             },
             "clip-content": false
           },
@@ -269,8 +266,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -331,16 +327,6 @@
           },
           {
             "id": "Icon",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "Bounding box",
@@ -448,16 +434,6 @@
           },
           {
             "id": "Icon1",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_pismo",
             "clip-content": false
@@ -467,8 +443,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -529,16 +504,6 @@
           },
           {
             "id": "Icon2",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_zakladki",
             "clip-content": false
@@ -606,16 +571,6 @@
           },
           {
             "id": "Icon3",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "icon"
@@ -649,15 +604,14 @@
             "id": "top_level",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Navigation bar"
             ],
@@ -671,8 +625,8 @@
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 360.0
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
@@ -680,8 +634,6 @@
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Segment 1",
               "Segment 2",
@@ -691,9 +643,9 @@
             "item-spacing": 8.0,
             "background-color": {
               "alpha": 1.0,
-              "hue": 275.9999999999999,
-              "saturation": 0.04048582995951414,
-              "value": 0.9686274509803922
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
             },
             "clip-content": false
           },
@@ -790,8 +742,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -852,16 +803,6 @@
           },
           {
             "id": "Icon",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "Bounding box",
@@ -907,8 +848,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -969,16 +909,6 @@
           },
           {
             "id": "Icon1",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_pismo",
             "clip-content": false
@@ -1046,16 +976,6 @@
           },
           {
             "id": "Icon2",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "icon"
@@ -1087,8 +1007,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -1149,16 +1068,6 @@
           },
           {
             "id": "Icon3",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_ustawienia",
             "clip-content": false
@@ -1171,15 +1080,14 @@
             "id": "top_level",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Navigation bar"
             ],
@@ -1193,8 +1101,8 @@
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 360.0
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
@@ -1202,8 +1110,6 @@
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Segment 1",
               "Segment 2",
@@ -1213,9 +1119,9 @@
             "item-spacing": 8.0,
             "background-color": {
               "alpha": 1.0,
-              "hue": 275.9999999999999,
-              "saturation": 0.04048582995951414,
-              "value": 0.9686274509803922
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
             },
             "clip-content": false
           },
@@ -1312,8 +1218,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -1374,16 +1279,6 @@
           },
           {
             "id": "Icon",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "Bounding box",
@@ -1438,7 +1333,8 @@
             "children": [
               "state-layer1"
             ],
-            "background-color": "^md.sys.color.secondary-container"
+            "background-color": "^md.sys.color.secondary-container",
+            "clip-content": false
           },
           {
             "id": "label-text1",
@@ -1487,16 +1383,6 @@
           },
           {
             "id": "Icon1",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": [
               "Bounding box1",
@@ -1604,16 +1490,6 @@
           },
           {
             "id": "Icon2",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_zakladki",
             "clip-content": false
@@ -1623,8 +1499,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -1685,16 +1560,6 @@
           },
           {
             "id": "Icon3",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_ustawienia",
             "clip-content": false
@@ -1707,15 +1572,14 @@
             "id": "top_level",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Navigation bar"
             ],
@@ -1729,8 +1593,8 @@
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 360.0
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
@@ -1738,8 +1602,6 @@
               }
             },
             "arrangement": "row",
-            "main-axis-align": "start",
-            "cross-axis-align": "start",
             "children": [
               "Segment 1",
               "Segment 2",
@@ -1749,9 +1611,9 @@
             "item-spacing": 8.0,
             "background-color": {
               "alpha": 1.0,
-              "hue": 275.9999999999999,
-              "saturation": 0.04048582995951414,
-              "value": 0.9686274509803922
+              "hue": 284.99999999999983,
+              "saturation": 0.032786885245901634,
+              "value": 0.9568627450980393
             },
             "clip-content": false
           },
@@ -1890,12 +1752,10 @@
             "tap-handler": "$onClickDom",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 64.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               }
             },
             "arrangement": "row",
@@ -1925,8 +1785,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -1987,16 +1846,6 @@
           },
           {
             "id": "Icon1",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_pismo",
             "clip-content": false
@@ -2006,8 +1855,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -2068,16 +1916,6 @@
           },
           {
             "id": "Icon2",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_zakladki",
             "clip-content": false
@@ -2087,8 +1925,7 @@
             "border-radius": 16.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 32.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -2149,16 +1986,6 @@
           },
           {
             "id": "Icon3",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": 24.0
-              }
-            },
             "is-structured": false,
             "children": "$icon_ustawienia",
             "clip-content": false
@@ -2347,9 +2174,9 @@
       "ambients": {
         "md.sys.color.on-surface-variant": {
           "alpha": 1.0,
-          "hue": 263.99999999999994,
-          "saturation": 0.12658227848101275,
-          "value": 0.30980392156862746
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
         },
         "md.sys.typescale.label-medium.weight": 500.0,
         "md.sys.typescale.label-medium.size": 12.0,
@@ -2357,7 +2184,7 @@
         "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
         "md.sys.color.secondary-container": {
           "alpha": 1.0,
-          "hue": 263.07692307692304,
+          "hue": 265.38461538461536,
           "saturation": 0.10483870967741933,
           "value": 0.9725490196078431
         },
@@ -2472,9 +2299,9 @@
       "ambients": {
         "md.sys.color.on-surface-variant": {
           "alpha": 1.0,
-          "hue": 263.99999999999994,
-          "saturation": 0.12658227848101275,
-          "value": 0.30980392156862746
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
         },
         "md.sys.typescale.label-medium.weight": 500.0,
         "md.sys.typescale.label-medium.size": 12.0,
@@ -2482,7 +2309,7 @@
         "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
         "md.sys.color.secondary-container": {
           "alpha": 1.0,
-          "hue": 263.07692307692304,
+          "hue": 265.38461538461536,
           "saturation": 0.10483870967741933,
           "value": 0.9725490196078431
         },
@@ -2597,9 +2424,9 @@
       "ambients": {
         "md.sys.color.on-surface-variant": {
           "alpha": 1.0,
-          "hue": 263.99999999999994,
-          "saturation": 0.12658227848101275,
-          "value": 0.30980392156862746
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
         },
         "md.sys.typescale.label-medium.weight": 500.0,
         "md.sys.typescale.label-medium.size": 12.0,
@@ -2607,7 +2434,7 @@
         "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
         "md.sys.color.secondary-container": {
           "alpha": 1.0,
-          "hue": 263.07692307692304,
+          "hue": 265.38461538461536,
           "saturation": 0.10483870967741933,
           "value": 0.9725490196078431
         },
@@ -2722,9 +2549,9 @@
       "ambients": {
         "md.sys.color.on-surface-variant": {
           "alpha": 1.0,
-          "hue": 263.99999999999994,
-          "saturation": 0.12658227848101275,
-          "value": 0.30980392156862746
+          "hue": 266.66666666666663,
+          "saturation": 0.11538461538461552,
+          "value": 0.3058823529411765
         },
         "md.sys.typescale.label-medium.weight": 500.0,
         "md.sys.typescale.label-medium.size": 12.0,
@@ -2732,7 +2559,7 @@
         "md.sys.typescale.label-medium.line-height": 1.3333332824707032,
         "md.sys.color.secondary-container": {
           "alpha": 1.0,
-          "hue": 263.07692307692304,
+          "hue": 265.38461538461536,
           "saturation": 0.10483870967741933,
           "value": 0.9725490196078431
         },
