@@ -6,45 +6,48 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
 import com.mandk.biblereasercher.navbar.Design
 import com.mandk.biblereasercher.navbar.NavBar
-import com.mandk.biblereasercher.navbar.NavigationBarDom
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
 import it.skrape.fetcher.skrape
+import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 //import com.mandk.biblereasercher.ui.theme.BibleResearcherTheme
 
@@ -149,21 +152,31 @@ fun Tab1(scrollState: ScrollState) {
         Surface(modifier = Modifier
             .fillMaxWidth())
         {
-            Column (modifier = Modifier.fillMaxWidth()
-                .padding(vertical = 20.dp),
-                verticalArrangement = Arrangement.Top){
-                Row (modifier = Modifier.fillMaxHeight(0.45f)){
-                    Text(modifier = Modifier
-                        .verticalScroll(scrollState),
-                        text = textOnScreen)
-                }
 
-                Spacer(modifier = Modifier.padding(10.dp))
+            SwipeCard(onSwipeRight = {Log.d("r", "right")}, onSwipeLeft = {Log.d("l", "left")}) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Row(modifier = Modifier.fillMaxHeight(0.45f)) {
+                        Text(
+                            modifier = Modifier
+                                .verticalScroll(scrollState),
+                            text = textOnScreen,
+                        )
+                    }
 
-                Row (modifier = Modifier.fillMaxHeight(0.83f)){
-                    Text(modifier = Modifier
-                        .verticalScroll(scrollState),
-                        text = textOnScreen)
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    Row(modifier = Modifier.fillMaxHeight(0.83f)) {
+                        Text(
+                            modifier = Modifier
+                                .verticalScroll(scrollState),
+                            text = textOnScreen
+                        )
+                    }
                 }
             }
         }
@@ -245,9 +258,64 @@ fun Tab2() {
 
 @Composable
 fun Tab3() {
-
     }
 
+@Composable
+fun SwipeCard(
+    onSwipeLeft: () -> Unit = {},
+    onSwipeRight: () -> Unit = {},
+    swipeThreshold: Float = 400f,
+    sensitivityFactor: Float = 3f,
+    content: @Composable () -> Unit
+) {
+    var offset by remember { mutableStateOf(0f) }
+    var dismissRight by remember { mutableStateOf(false) }
+    var dismissLeft by remember { mutableStateOf(false) }
+    val density = LocalDensity.current.density
+
+    LaunchedEffect(dismissRight) {
+        if (dismissRight) {
+            delay(300)
+            onSwipeRight.invoke()
+            dismissRight = false
+        }
+    }
+
+    LaunchedEffect(dismissLeft) {
+        if (dismissLeft) {
+            delay(300)
+            onSwipeLeft.invoke()
+            dismissLeft = false
+        }
+    }
+
+    Box(modifier = Modifier
+        .offset { IntOffset(offset.roundToInt(), 0) }
+        .pointerInput(Unit) {
+            detectHorizontalDragGestures(onDragEnd = {
+                offset = 0f
+            }) { change, dragAmount ->
+
+                offset += (dragAmount / density) * sensitivityFactor
+                when {
+                    offset > swipeThreshold -> {
+                        dismissRight = true
+
+                    }
+
+                    offset < -swipeThreshold -> {
+                        dismissLeft = true
+
+                    }
+                }
+                if (change.positionChange() != Offset.Zero) change.consume()
+            }
+        }
+    )
+    {
+        content()
+    }
+}
 
 
 
