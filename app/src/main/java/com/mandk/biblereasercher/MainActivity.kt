@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -85,16 +86,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
     var selectedTab by remember { mutableIntStateOf(1) }
-
+    val scrollState = rememberScrollState()
     AppTheme() {
         Column(modifier = Modifier.fillMaxSize()) {
             // Display the selected tab content
             when (selectedTab) {
-                0 -> Tab1()
+                0 -> Tab1(scrollState)
                 1 -> Tab2()
                 2 -> Tab3()
             }
-            Row(modifier = Modifier.fillMaxSize()) {
+            Row(modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.Bottom) {
                 Button(onClick = { selectedTab = 0 }) {
                     Text(text = "Tab 1")
                 }
@@ -111,10 +113,12 @@ fun MyApp() {
 }
 
 @Composable
-fun Tab1() {
+fun Tab1(scrollState: ScrollState) {
     val rozdzial: MutableList<Werset> = ArrayList()
     var werset = Werset(text = "", nr = "")
     var textOnScreen = ""
+
+
     skrape(HttpFetcher) {
         // make an HTTP GET request to the specified URL
         request {
@@ -145,9 +149,23 @@ fun Tab1() {
         Surface(modifier = Modifier
             .fillMaxWidth())
         {
-            Text(modifier = Modifier
-                .verticalScroll(rememberScrollState()),
-                text = textOnScreen)
+            Column (modifier = Modifier.fillMaxWidth()
+                .padding(vertical = 20.dp),
+                verticalArrangement = Arrangement.Top){
+                Row (modifier = Modifier.fillMaxHeight(0.45f)){
+                    Text(modifier = Modifier
+                        .verticalScroll(scrollState),
+                        text = textOnScreen)
+                }
+
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                Row (modifier = Modifier.fillMaxHeight(0.83f)){
+                    Text(modifier = Modifier
+                        .verticalScroll(scrollState),
+                        text = textOnScreen)
+                }
+            }
         }
     }
 
