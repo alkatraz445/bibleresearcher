@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.platform.LocalDensity
@@ -264,7 +270,7 @@ fun Tab3() {
 fun SwipeCard(
     onSwipeLeft: () -> Unit = {},
     onSwipeRight: () -> Unit = {},
-    swipeThreshold: Float = 400f,
+    swipeThreshold: Float = 450f,
     sensitivityFactor: Float = 3f,
     content: @Composable () -> Unit
 ) {
@@ -272,6 +278,9 @@ fun SwipeCard(
     var dismissRight by remember { mutableStateOf(false) }
     var dismissLeft by remember { mutableStateOf(false) }
     val density = LocalDensity.current.density
+
+    val backgroundImage = painterResource(id = R.drawable.read)
+
 
     LaunchedEffect(dismissRight) {
         if (dismissRight) {
@@ -289,31 +298,45 @@ fun SwipeCard(
         }
     }
 
-    Box(modifier = Modifier
-        .offset { IntOffset(offset.roundToInt(), 0) }
-        .pointerInput(Unit) {
-            detectHorizontalDragGestures(onDragEnd = {
-                offset = 0f
-            }) { change, dragAmount ->
 
-                offset += (dragAmount / density) * sensitivityFactor
-                when {
-                    offset > swipeThreshold -> {
-                        dismissRight = true
 
+    Box (modifier = Modifier){
+        Image(painter = backgroundImage, contentDescription = null, modifier = Modifier
+            .fillMaxSize()
+            .scale(1.5f))
+        Box(modifier = Modifier
+            .offset { IntOffset(offset.roundToInt(), 0) }
+            .background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(onDragEnd = {
+                    offset = 0f
+                }) { change, dragAmount ->
+
+                    offset += (dragAmount / density) * sensitivityFactor
+                    when {
+                        offset > swipeThreshold -> {
+                            dismissRight = true
+
+                        }
+
+                        offset < -swipeThreshold -> {
+                            dismissLeft = true
+
+                        }
                     }
-
-                    offset < -swipeThreshold -> {
-                        dismissLeft = true
-
-                    }
+                    if (change.positionChange() != Offset.Zero) change.consume()
                 }
-                if (change.positionChange() != Offset.Zero) change.consume()
             }
+            .graphicsLayer(
+                alpha = 1f - animateFloatAsState(
+                    if (dismissRight) 1f else 0f,
+                    label = ""
+                ).value,
+            )
+        )
+        {
+            content()
         }
-    )
-    {
-        content()
     }
 }
 
