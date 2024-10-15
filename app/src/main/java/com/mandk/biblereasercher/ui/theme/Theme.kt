@@ -3,11 +3,10 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.Typography
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
@@ -23,9 +22,9 @@ private val lightScheme = lightColorScheme(
     onPrimary = onPrimaryLight,
     primaryContainer = primaryContainerLight,
     onPrimaryContainer = onPrimaryContainerLight,
-    secondary = secondaryLight,
+    secondary = surfaceContainerHighestLight,
     onSecondary = onSecondaryLight,
-    secondaryContainer = secondaryContainerLight,
+    secondaryContainer = surfaceContainerLight,
     onSecondaryContainer = onSecondaryContainerLight,
     tertiary = tertiaryLight,
     onTertiary = onTertiaryLight,
@@ -61,9 +60,9 @@ private val darkScheme = darkColorScheme(
     onPrimary = onPrimaryDark,
     primaryContainer = primaryContainerDark,
     onPrimaryContainer = onPrimaryContainerDark,
-    secondary = secondaryDark,
+    secondary = surfaceContainerHighestDark,
     onSecondary = onSecondaryDark,
-    secondaryContainer = secondaryContainerDark,
+    secondaryContainer = surfaceContainerDark,
     onSecondaryContainer = onSecondaryContainerDark,
     tertiary = tertiaryDark,
     onTertiary = onTertiaryDark,
