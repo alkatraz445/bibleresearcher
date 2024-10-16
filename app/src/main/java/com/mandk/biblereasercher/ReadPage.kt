@@ -36,6 +36,7 @@ fun ReadPage(navController: NavController) {
     skrape(HttpFetcher) {
         // make an HTTP GET request to the specified URL
         request {
+            // TODO Has to be dynamically changed by the user
             url = "http://biblia-online.pl/Biblia/Tysiaclecia/Ksiega-Rodzaju/1/1"
         }
         response {

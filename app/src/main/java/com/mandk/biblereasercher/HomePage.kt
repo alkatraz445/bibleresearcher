@@ -1,6 +1,5 @@
 package com.mandk.biblereasercher
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,32 +21,43 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 
+data class UserSelection(
+        val translation : String,
+        val chapter : Int,
+        val werset : Int? = null
+)
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(navController: NavController) {
-        val translations = listOf("Tysiąclecia", "Wujka")
-        val selectedValue = remember{ mutableStateOf("Tysiąclecia")}
+        val websiteForBible = "http://biblia-online.pl/Biblia/"
+
+        val translations = listOf("Tysiaclecia", "UwspolczesnionaBibliaGdanska", "Warszawska","JakubaWujka", "Brzeska")
+
+        val selectedValue1 = remember{ mutableStateOf(UserSelection(translations[0], 1))}
+        val selectedValue2 = remember{ mutableStateOf(UserSelection(translations[0], 1))}
         Column(modifier = Modifier.fillMaxWidth(1f)) {
-                DynamicSelectTextField(selectedValue.value, translations, "Tłumaczenie 1",
-                        onValueChangedEvent = {
-                                selectedValue.value = it
-                        })
-                Spacer(modifier = Modifier.padding(20.dp))
+//                DynamicSelectTextField(selectedValue.value, translations, "Tłumaczenie 1",
+//                        onValueChangedEvent = {
+//                                selectedValue.value = it
+//                        })
+//                Spacer(modifier = Modifier.padding(20.dp))
                 // TODO add different way of selecting the Bible
                 SelectionBox(
-                        selectedValue.value,
+                        selectedValue1.value,
                         translations,
                         onValueChangedEvent = {
-                        selectedValue.value = it
+                        selectedValue1.value = it
                 })
 
         }
@@ -56,12 +66,16 @@ fun HomePage(navController: NavController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectionBox(
-        selectedValue: String,
+        selectedValue: UserSelection,
         options: List<String>,
-        onValueChangedEvent: (String) -> Unit,)
+        onValueChangedEvent: (UserSelection) -> Unit,)
 {
-        var expanded by remember { mutableStateOf(false) }
-        var textFieldSize by remember { mutableStateOf(Size.Zero)}
+        var expandedTranslationMenu by remember { mutableStateOf(false) }
+        var expandedChapterMenu by remember { mutableStateOf(false) }
+        var expandedWersetMenu by remember { mutableStateOf(false) }
+
+        var selectedTranslation by remember { mutableStateOf("") }
+        var selectedChapter by remember { mutableIntStateOf(0) }
 
         Row(modifier = Modifier
                 .fillMaxWidth(1f)
@@ -74,40 +88,37 @@ fun SelectionBox(
                 )
                 {
                         ExposedDropdownMenuBox(
-                                expanded = expanded,
-                                onExpandedChange = { expanded = !expanded },
+                                expanded = expandedTranslationMenu,
+                                onExpandedChange = { expandedTranslationMenu = !expandedTranslationMenu },
 //                                modifier = modifier
                         )  {
                                 TextField(
                                         enabled = false,
                                         readOnly = true,
                                         singleLine = true,
-                                        value = selectedValue,
+                                        value = selectedValue.translation + selectedValue.chapter,
                                         onValueChange = {},
                                         label = {
                                                 Text(
                                                         style = MaterialTheme.typography.labelMedium, // TODO font to be changed
-                                                        text = "label"
+                                                        text = "Tłumaczenie"
                                                 )
                                         },
 
                                         colors = TextFieldDefaults.colors(
                                                 disabledTextColor = MaterialTheme.colorScheme.onSurface,
                                                 disabledLabelColor = MaterialTheme.colorScheme.onSurface,
-
                                                 ),
                                         modifier = Modifier
                                                 .fillMaxWidth()
                                                 .menuAnchor()
-                                                .clickable(onClick = {
-                                                        Log.d("Clicked txtfield", "log")
-                                                }),
+                                                .clickable(onClick = {}),
                                         textStyle = MaterialTheme.typography.labelLarge,
 
                                         )
                                 DropdownMenu(
-                                        expanded = expanded,
-                                        onDismissRequest = { expanded = false },
+                                        expanded = expandedTranslationMenu,
+                                        onDismissRequest = { expandedTranslationMenu = false },
                                         properties = PopupProperties(
                                                 focusable = true,
                                                 dismissOnClickOutside = true,
@@ -120,8 +131,33 @@ fun SelectionBox(
                                                 DropdownMenuItem(
                                                         text = { Text(text = option) },
                                                         onClick = {
-                                                                expanded = false
-                                                                onValueChangedEvent(option)
+                                                                expandedTranslationMenu = false
+
+                                                                selectedTranslation = option
+
+                                                                expandedChapterMenu = true
+//                                                                onValueChangedEvent(UserSelection(option, 1))
+                                                        }
+                                                )
+                                        }
+                                }
+                                DropdownMenu(
+                                        expanded = expandedChapterMenu,
+                                        onDismissRequest = { expandedChapterMenu = false },
+                                        properties = PopupProperties(
+                                                focusable = true,
+                                                dismissOnClickOutside = true,
+                                                dismissOnBackPress = true
+                                        ),
+                                        modifier = Modifier.exposedDropdownSize()
+                                )
+                                {
+                                        options.forEachIndexed() { index, option: String ->
+                                                DropdownMenuItem(
+                                                        text = { Text(text = index.toString()) },
+                                                        onClick = {
+                                                                expandedChapterMenu = false
+                                                                onValueChangedEvent(UserSelection(selectedTranslation, index))
                                                         }
                                                 )
                                         }

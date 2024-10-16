@@ -33,16 +33,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-class Bible {
-    val websiteForBible = listOf(
-        "http://biblia-online.pl/Biblia/Tysiaclecia/",
-        "http://biblia-online.pl/Biblia/UwspolczesnionaBibliaGdanska/",
-        "http://biblia-online.pl/Biblia/Warszawska/",
-        "http://biblia-online.pl/Biblia/JakubaWujka/",
-        "http://biblia-online.pl/Biblia/Brzeska/"
-    )
-}
-
 class Werset(var text: String, var nr: String) {
     fun printWerset() {
         Log.d("Werset print", "$nr: $text")
