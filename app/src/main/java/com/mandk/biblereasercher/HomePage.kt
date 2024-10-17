@@ -29,11 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
+import it.skrape.core.htmlDocument
+import it.skrape.fetcher.HttpFetcher
+import it.skrape.fetcher.response
+import it.skrape.fetcher.skrape
 
 data class UserSelection(
         val translation : String,
-        val chapter : Int,
-        val werset : Int? = null
+        val testament : String,
+        val chapter : String,
+        val passage: Int = 1,
+        val werset : Int? = 1
 )
 
 
@@ -71,11 +77,16 @@ fun SelectionBox(
         onValueChangedEvent: (UserSelection) -> Unit,)
 {
         var expandedTranslationMenu by remember { mutableStateOf(false) }
+        var expandedTestamentMenu by remember { mutableStateOf(false) }
         var expandedChapterMenu by remember { mutableStateOf(false) }
         var expandedWersetMenu by remember { mutableStateOf(false) }
 
         var selectedTranslation by remember { mutableStateOf("") }
+        var selectedTestament by remember { mutableStateOf("") }
+
         var selectedChapter by remember { mutableIntStateOf(0) }
+
+        val testaments : List<String> = listOf("Stary Testament", "Nowy Testament")
 
         Row(modifier = Modifier
                 .fillMaxWidth(1f)
@@ -135,6 +146,32 @@ fun SelectionBox(
 
                                                                 selectedTranslation = option
 
+                                                                expandedTestamentMenu = true
+//                                                                onValueChangedEvent(UserSelection(option, 1))
+                                                        }
+                                                )
+                                        }
+                                }
+                                DropdownMenu(
+                                        expanded = expandedTestamentMenu,
+                                        onDismissRequest = { expandedTestamentMenu = false },
+                                        properties = PopupProperties(
+                                                focusable = true,
+                                                dismissOnClickOutside = true,
+                                                dismissOnBackPress = true
+                                        ),
+                                        modifier = Modifier.exposedDropdownSize()
+                                )
+                                {
+
+                                        testaments.forEach { option: String ->
+                                                DropdownMenuItem(
+                                                        text = { Text(text = option) },
+                                                        onClick = {
+                                                                expandedTestamentMenu = false
+
+                                                                selectedTestament = option
+
                                                                 expandedChapterMenu = true
 //                                                                onValueChangedEvent(UserSelection(option, 1))
                                                         }
@@ -152,12 +189,29 @@ fun SelectionBox(
                                         modifier = Modifier.exposedDropdownSize()
                                 )
                                 {
-                                        options.forEachIndexed() { index, option: String ->
+                                        // create list of chapters according to the translation
+                                        val chapterOptions : MutableList<String> = ArrayList()
+                                        skrape(HttpFetcher)
+                                        {
+                                                request {
+
+                                                        url = "http://biblia-online.pl/Biblia/ListaKsiag/$selectedTranslation/"
+                                                }
+                                                response {
+                                                        htmlDocument {
+                                                                "div.ot-books-list"{
+                                                                        findAll{
+
+                                                                        }                                                                }
+                                                        }
+                                                }
+                                        }
+                                        chapterOptions.forEach() {  option: String ->
                                                 DropdownMenuItem(
-                                                        text = { Text(text = index.toString()) },
+                                                        text = { Text(text = option) },
                                                         onClick = {
                                                                 expandedChapterMenu = false
-                                                                onValueChangedEvent(UserSelection(selectedTranslation, index))
+                                                                onValueChangedEvent(UserSelection(selectedTranslation, option))
                                                         }
                                                 )
                                         }
