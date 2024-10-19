@@ -28,16 +28,36 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class Werset(var text: String, var nr: String) {
     fun printWerset() {
         Log.d("Werset print", "$nr: $text")
     }
 }
+
+data class Book(
+    val index: Int,
+    val fullName: String,
+    val abbrName: String,
+    val url: String? = null
+)
+
+data class UserSelection(
+    var translation: String,
+    var testament: String,
+    var book: Book,
+    var chapter: String = "1",
+    val werset: Int? = 1
+)
 
 data class BottomNavigationItem(
     val title: String,
@@ -49,10 +69,60 @@ data class BottomNavigationItem(
 
 data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem, val route: T)
 
+class UserSelectionViewmodel : ViewModel()
+{
+    // TODO These values have to be saved even after closing the application
+    private val _topSelectionState = MutableStateFlow(
+        UserSelection(
+                translation = "Tysiaclecia",
+                testament = "Stary Testament",
+                book = Book(0, "Ksiega Rodzaju", "Rdz"),
+                chapter = "1"
+            ))
+
+    val topSelectionState: StateFlow<UserSelection> = _topSelectionState.asStateFlow()
+
+    private val _bottomSelectionState = MutableStateFlow(
+        UserSelection(
+            translation = topSelectionState.value.translation,
+            testament = topSelectionState.value.testament,
+            book = topSelectionState.value.book,
+            chapter = "1"
+        ))
+
+    val bottomSelectionState: StateFlow<UserSelection> = _bottomSelectionState.asStateFlow()
+
+    fun updateTopSelection(value : UserSelection)
+    {
+        _topSelectionState.update { currentState ->
+            currentState.copy(
+                translation = value.translation,
+                testament = value.testament,
+                book = value.book,
+                chapter = value.chapter
+                )
+        }
+    }
+
+    fun updateBottomSelection(value : UserSelection)
+    {
+        _bottomSelectionState.update { currentState ->
+            currentState.copy(
+                translation = value.translation,
+                testament = value.testament,
+                book = value.book,
+                chapter = value.chapter
+            )
+        }
+    }
+
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    val viewModelSelection = UserSelectionViewmodel()
     var selectedTab by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -93,8 +163,9 @@ fun Navigation() {
                 hasNews = false
             ),
             SettingsScreen
-        ),
+        )
     )
+
     Scaffold(
         modifier = Modifier.padding(top = 50.dp),
         topBar = {
@@ -150,7 +221,7 @@ fun Navigation() {
         )
         {
             composable<HomeScreen> {
-                HomePage(navController)
+                HomePage(navController, viewModelSelection)
             }
 
             composable<ReaderScreen>
@@ -159,7 +230,7 @@ fun Navigation() {
             }
 
             composable<BookmarkScreen> {
-                BookmarkPage(navController)
+                BookmarkPage(navController, viewModelSelection)
             }
 
             composable<SettingsScreen> {
