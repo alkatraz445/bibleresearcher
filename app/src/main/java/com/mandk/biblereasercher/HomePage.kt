@@ -36,6 +36,7 @@ import it.skrape.selects.html5.a
 import it.skrape.selects.html5.div
 
 data class Book(
+    val index: Int,
     val fullName: String,
     val abbrName: String,
     val url: String? = null
@@ -68,11 +69,23 @@ fun HomePage(navController: NavController) {
             UserSelection(
                 translation = translations[0],
                 testament = "Stary Testament",
-                book = Book("Ksiega Rodzaju", "Rdz"),
+                book = Book(1, "Ksiega Rodzaju", "Rdz"),
                 chapter = "1"
             )
         )
     }
+
+    val selectedValue2 = remember {
+        mutableStateOf(
+            UserSelection(
+                translation = selectedValue1.value.translation,
+                testament = selectedValue1.value.testament,
+                book = selectedValue1.value.book,
+                chapter = selectedValue1.value.chapter
+            )
+        )
+    }
+
 //        val selectedValue2 = remember{ mutableStateOf(UserSelection(translations[0], 1))}
     Column(modifier = Modifier.fillMaxWidth(1f)) {
 //                DynamicSelectTextField(selectedValue.value, translations, "Tłumaczenie 1",
@@ -87,6 +100,15 @@ fun HomePage(navController: NavController) {
             onValueChangedEvent = {
                 selectedValue1.value = it
             })
+        Spacer(Modifier.padding(40.dp))
+
+        SelectionBox(
+            selectedValue2.value,
+            translations,
+            onValueChangedEvent = {
+                selectedValue1.value = it
+            },
+            selectedValue1.value)
 
     }
 }
@@ -99,6 +121,7 @@ fun SelectionBox(
     selectedValue: UserSelection,
     options: List<String>,
     onValueChangedEvent: (UserSelection) -> Unit,
+    previousSelection: UserSelection? = null
 ) {
     var expandedTranslationMenu by remember { mutableStateOf(false) }
     var expandedTestamentMenu by remember { mutableStateOf(false) }
@@ -106,14 +129,7 @@ fun SelectionBox(
     var expandedChapterMenu by remember { mutableStateOf(false) }
     var expandedWersetMenu by remember { mutableStateOf(false) }
 
-//        var selectedTranslation by remember { mutableStateOf("") }
-//        var selectedTestament by remember { mutableStateOf("") }
-//        var selectedBook : Book by remember { mutableStateOf(Book("","", "")) }
-////        var selectedBook by remember { mutableStateOf("") }
-//        var selectedChapter by remember { mutableStateOf("0") }
-
     val testaments: List<String> = listOf("Stary Testament", "Nowy Testament")
-
 
     Row(
         modifier = Modifier
@@ -126,127 +142,205 @@ fun SelectionBox(
             color = MaterialTheme.colorScheme.secondary,
         )
         {
-            ExposedDropdownMenuBox(
-                expanded = expandedTranslationMenu,
-                onExpandedChange = { expandedTranslationMenu = !expandedTranslationMenu },
-//                                modifier = modifier
-            ) {
-                val bookOptions: MutableList<Book> = ArrayList()
-                val chapterOptions: MutableList<String> = ArrayList()
-                TextField(
-                    enabled = false,
-                    readOnly = true,
-                    singleLine = true,
-                    value = "${selectedValue.translation}, ${selectedValue.book.abbrName}, ${selectedValue.chapter}",
-                    onValueChange = {},
-                    label = {
-                        Text(
-                            style = MaterialTheme.typography.labelMedium, // TODO font to be changed
-                            text = "Tłumaczenie"
-                        )
-                    },
-
-                    colors = TextFieldDefaults.colors(
-                        disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                        disabledLabelColor = MaterialTheme.colorScheme.onSurface,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                        .clickable(onClick = {}),
-                    textStyle = MaterialTheme.typography.labelLarge,
-
-                    )
-                // Menu for selecting Translation (from fixed list)
-                // TODO make it scrape from the website
-                DropdownMenu(
+            if (previousSelection != null) {
+                ExposedDropdownMenuBox(
                     expanded = expandedTranslationMenu,
-                    onDismissRequest = { expandedTranslationMenu = false },
-                    properties = PopupProperties(
-                        focusable = true,
-                        dismissOnClickOutside = true,
-                        dismissOnBackPress = true
-                    ),
-                    modifier = Modifier.exposedDropdownSize()
-                )
-                {
-                    options.forEach { option: String ->
-                        DropdownMenuItem(
-                            text = { Text(text = option) },
-                            onClick = {
-                                expandedTranslationMenu = false
-                                selectedValue.translation = option
+                    onExpandedChange = { expandedTranslationMenu = !expandedTranslationMenu },
+//                                modifier = modifier
+                ) {
+                    TextField(
+                        enabled = false,
+                        readOnly = true,
+                        singleLine = true,
+                        value = "${selectedValue.translation}, ${selectedValue.book.abbrName}, ${selectedValue.chapter}",
+                        onValueChange = {},
+                        label = {
+                            Text(
+                                style = MaterialTheme.typography.labelMedium, // TODO font to be changed
+                                text = "Tłumaczenie"
+                            )
+                        },
 
-                                expandedTestamentMenu = true
-//                                                                onValueChangedEvent(UserSelection(option, 1))
-                            }
+                        colors = TextFieldDefaults.colors(
+                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                            disabledLabelColor = MaterialTheme.colorScheme.onSurface,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                            .clickable(onClick = {}),
+                        textStyle = MaterialTheme.typography.labelLarge,
                         )
-                    }
-                }
-                // Menu for choice of testament
-                DropdownMenu(
-                    expanded = expandedTestamentMenu,
-                    onDismissRequest = { expandedTestamentMenu = false },
-                    properties = PopupProperties(
-                        focusable = true,
-                        dismissOnClickOutside = true,
-                        dismissOnBackPress = true
-                    ),
-                    modifier = Modifier.exposedDropdownSize()
-                )
-                {
-
-                    testaments.forEach { option: String ->
-                        DropdownMenuItem(
-                            text = { Text(text = option) },
-                            onClick = {
-                                expandedTestamentMenu = false
-                                selectedValue.testament = option
-                                expandedBookMenu = true
-//                                                                onValueChangedEvent(UserSelection(option, 1))
-                            }
-                        )
-                    }
-                }
-                // Menu for choice of book from the translation
-                DropdownMenu(
-                    expanded = expandedBookMenu,
-                    onDismissRequest = { expandedBookMenu = false },
-                    properties = PopupProperties(
-                        focusable = true,
-                        dismissOnClickOutside = true,
-                        dismissOnBackPress = true
-                    ),
-                    modifier = Modifier.exposedDropdownSize()
-                )
-                {
-                    // create list of chapters according to the translation
-                    skrape(HttpFetcher)
+                    // Menu for selecting Translation (from fixed list)
+                    // TODO make it scrape from the website
+                    DropdownMenu(
+                        expanded = expandedTranslationMenu,
+                        onDismissRequest = { expandedTranslationMenu = false },
+                        properties = PopupProperties(
+                            focusable = true,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true
+                        ),
+                        modifier = Modifier.exposedDropdownSize()
+                    )
                     {
-                        request {
+                        options.forEach { option: String ->
+                            DropdownMenuItem(
+                                text = { Text(text = option) },
+                                onClick = {
+                                    expandedTranslationMenu = false
+                                    selectedValue.translation = option
 
-                            url =
-                                "http://biblia-online.pl/Biblia/ListaKsiag/${selectedValue.translation}/"
+                                    expandedTestamentMenu = true
+                                }
+                            )
                         }
-                        response {
-                            htmlDocument {
-                                div {
-                                    withId = "ot-books-list"
-                                    findFirst {
-                                        this.div {
-                                            withClass = "book-list-item"
-                                            findAll {
-                                                forEach {
-                                                    val fullBookName = it.findFirst("a").text
-                                                    val abbrBookName = it.findFirst("span").text
-                                                    val url = it.findFirst("a").attribute("href")
-                                                    bookOptions.add(
-                                                        Book(
-                                                            fullBookName,
-                                                            abbrBookName,
-                                                            url
-                                                        )
-                                                    )
+                    }
+                    selectedValue.testament = previousSelection.testament
+                    // TODO needs to be reworked with scraping
+                    val secondBookOptions = scrapeForBook(selectedValue.translation, selectedValue.testament)
+                    selectedValue.book = secondBookOptions[previousSelection.book.index]
+                    selectedValue.chapter = previousSelection.chapter
+
+                }
+            }
+            else
+            {
+                ExposedDropdownMenuBox(
+                    expanded = expandedTranslationMenu,
+                    onExpandedChange = { expandedTranslationMenu = !expandedTranslationMenu },
+//                                modifier = modifier
+                ) {
+                    var bookOptions : MutableList<Book> = ArrayList()
+                    val chapterOptions: MutableList<String> = ArrayList()
+
+                    TextField(
+                        enabled = false,
+                        readOnly = true,
+                        singleLine = true,
+                        value = "${selectedValue.translation}, ${selectedValue.book.abbrName}, ${selectedValue.chapter}",
+                        onValueChange = {},
+                        label = {
+                            Text(
+                                style = MaterialTheme.typography.labelMedium, // TODO font to be changed
+                                text = "Tłumaczenie"
+                            )
+                        },
+
+                        colors = TextFieldDefaults.colors(
+                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                            disabledLabelColor = MaterialTheme.colorScheme.onSurface,
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                            .clickable(onClick = {}),
+                        textStyle = MaterialTheme.typography.labelLarge,
+
+                        )
+                    // Menu for selecting Translation (from fixed list)
+                    // TODO make it scrape from the website
+                    DropdownMenu(
+                        expanded = expandedTranslationMenu,
+                        onDismissRequest = { expandedTranslationMenu = false },
+                        properties = PopupProperties(
+                            focusable = true,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true
+                        ),
+                        modifier = Modifier.exposedDropdownSize()
+                    )
+                    {
+                        options.forEach { option: String ->
+                            DropdownMenuItem(
+                                text = { Text(text = option) },
+                                onClick = {
+                                    expandedTranslationMenu = false
+                                    selectedValue.translation = option
+
+                                    expandedTestamentMenu = true
+//                                                                onValueChangedEvent(UserSelection(option, 1))
+                                }
+                            )
+                        }
+                    }
+                    // Menu for choice of testament
+                    DropdownMenu(
+                        expanded = expandedTestamentMenu,
+                        onDismissRequest = { expandedTestamentMenu = false },
+                        properties = PopupProperties(
+                            focusable = true,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true
+                        ),
+                        modifier = Modifier.exposedDropdownSize()
+                    )
+                    {
+
+                        testaments.forEach { option: String ->
+                            DropdownMenuItem(
+                                text = { Text(text = option) },
+                                onClick = {
+                                    expandedTestamentMenu = false
+                                    selectedValue.testament = option
+                                    expandedBookMenu = true
+                                }
+                            )
+                        }
+                    }
+                    // Menu for choice of book from the translation
+                    DropdownMenu(
+                        expanded = expandedBookMenu,
+                        onDismissRequest = { expandedBookMenu = false },
+                        properties = PopupProperties(
+                            focusable = true,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true
+                        ),
+                        modifier = Modifier.exposedDropdownSize()
+                    )
+                    {
+                        bookOptions = scrapeForBook(selectedValue.translation, selectedValue.testament)
+                        bookOptions.forEach { option: Book ->
+                            DropdownMenuItem(
+                                text = { Text(text = option.fullName) },
+                                onClick = {
+                                    expandedBookMenu = false
+                                    selectedValue.book = option
+                                    expandedChapterMenu = true
+                                }
+                            )
+                        }
+                    }
+                    // menu to choose chapter
+                    DropdownMenu(
+                        expanded = expandedChapterMenu,
+                        onDismissRequest = { expandedChapterMenu = false },
+                        properties = PopupProperties(
+                            focusable = true,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true
+                        ),
+                        modifier = Modifier.exposedDropdownSize()
+                    )
+                    {
+                        // create list of chapters according to the translation
+                        skrape(HttpFetcher)
+                        {
+                            request {
+
+                                url = "http://biblia-online.pl/${selectedValue.book.url}"
+                            }
+                            response {
+                                htmlDocument {
+                                    div {
+                                        withClass = "mnav-chptrs-cell"
+                                        findFirst {
+                                            this.a {
+                                                findAll {
+                                                    forEach {
+                                                        chapterOptions.add(it.text)
+                                                    }
                                                 }
                                             }
                                         }
@@ -254,73 +348,92 @@ fun SelectionBox(
                                 }
                             }
                         }
-                    }
-                    bookOptions.forEach { option: Book ->
-                        DropdownMenuItem(
-                            text = { Text(text = option.fullName) },
-                            onClick = {
-                                expandedBookMenu = false
-                                selectedValue.book = option
-                                expandedChapterMenu = true
-
-//                                                                onValueChangedEvent(UserSelection(
-//                                                                        translation = selectedTranslation,
-//                                                                        testament = selectedTestament,
-//                                                                        book = option))
-                            }
-                        )
-                    }
-                }
-                // menu to choose chapter
-                DropdownMenu(
-                    expanded = expandedChapterMenu,
-                    onDismissRequest = { expandedChapterMenu = false },
-                    properties = PopupProperties(
-                        focusable = true,
-                        dismissOnClickOutside = true,
-                        dismissOnBackPress = true
-                    ),
-                    modifier = Modifier.exposedDropdownSize()
-                )
-                {
-                    // create list of chapters according to the translation
-                    skrape(HttpFetcher)
-                    {
-                        request {
-
-                            url = "http://biblia-online.pl/${selectedValue.book.url}"
-                        }
-                        response {
-                            htmlDocument {
-                                div {
-                                    withClass = "mnav-chptrs-cell"
-                                    findFirst {
-                                        this.a {
-                                            findAll {
-                                                forEach {
-                                                    chapterOptions.add(it.text)
-                                                }
-                                            }
-                                        }
-                                    }
+                        chapterOptions.forEach { option: String ->
+                            DropdownMenuItem(
+                                text = { Text(text = option) },
+                                onClick = {
+                                    expandedChapterMenu = false
+                                    selectedValue.chapter = option
+                                    onValueChangedEvent(selectedValue)
                                 }
-                            }
+                            )
                         }
-                    }
-                    chapterOptions.forEach { option: String ->
-                        DropdownMenuItem(
-                            text = { Text(text = option) },
-                            onClick = {
-                                expandedChapterMenu = false
-                                selectedValue.chapter = option
-                                onValueChangedEvent(selectedValue)
-                            }
-                        )
                     }
                 }
             }
         }
     }
+
+}
+
+fun scrapeForBook(translation: String, testament: String) : MutableList<Book> {
+    val bookOptions: MutableList<Book> = ArrayList()
+    // create list of chapters according to the translation
+    skrape(HttpFetcher)
+    {
+        request {
+
+            url =
+                "http://biblia-online.pl/Biblia/ListaKsiag/${translation}/"
+        }
+        response {
+            htmlDocument {
+                div {
+                    withId = "ot-books-list"
+                    if (testament == "Stary Testament") {
+                        findFirst {
+                            this.div {
+                                withClass = "book-list-item"
+                                findAll {
+                                    forEachIndexed { index, it ->
+                                        val fullBookName =
+                                            it.findFirst("a").text
+                                        val abbrBookName =
+                                            it.findFirst("span").text
+                                        val url =
+                                            it.findFirst("a").attribute("href")
+                                        bookOptions.add(
+                                            Book(
+                                                index,
+                                                fullBookName,
+                                                abbrBookName,
+                                                url
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        findSecond {
+                            this.div {
+                                withClass = "book-list-item"
+                                findAll {
+                                    forEachIndexed { index, it ->
+                                        val fullBookName =
+                                            it.findFirst("a").text
+                                        val abbrBookName =
+                                            it.findFirst("span").text
+                                        val url =
+                                            it.findFirst("a").attribute("href")
+                                        bookOptions.add(
+                                            Book(
+                                                index,
+                                                fullBookName,
+                                                abbrBookName,
+                                                url
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return bookOptions
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
