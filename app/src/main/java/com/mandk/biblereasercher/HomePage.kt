@@ -253,7 +253,6 @@ fun SelectionBox(
                         modifier = Modifier.exposedDropdownSize()
                     )
                     {
-
                         testaments.forEach { option: String ->
                             DropdownMenuItem(
                                 text = { Text(text = option) },
@@ -305,8 +304,8 @@ fun SelectionBox(
                         skrape(HttpFetcher)
                         {
                             request {
-
                                 url = "http://biblia-online.pl/${selectedValue.book.url}"
+                                timeout = 5000
                             }
                             response {
                                 htmlDocument {
@@ -413,3 +412,4 @@ fun scrapeForBook(translation: String, testament: String) : MutableList<Book> {
     }
     return bookOptions
 }
+
