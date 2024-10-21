@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 import com.example.compose.AppTheme
 
 @Composable
-fun BookmarkPage(navController: NavController, viewModel: UserSelectionViewmodel = viewModel()) {
+fun BookmarkPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
     val topSelection by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val bottomSelection by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
 

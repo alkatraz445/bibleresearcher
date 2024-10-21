@@ -1,11 +1,13 @@
 package com.mandk.biblereasercher
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +28,7 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
@@ -33,9 +36,8 @@ import it.skrape.fetcher.skrape
 import it.skrape.selects.html5.a
 import it.skrape.selects.html5.div
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePage(navController: NavController, viewModel: UserSelectionViewmodel = viewModel()) {
+fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel()) {
     val websiteForBible = "http://biblia-online.pl/Biblia/"
     val translations = listOf(
         "Tysiaclecia",
@@ -46,27 +48,7 @@ fun HomePage(navController: NavController, viewModel: UserSelectionViewmodel = v
     )
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val selectedValue2 by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
-//    val selectedValue1 = remember {
-//        mutableStateOf(
-//            UserSelection(
-//                translation = translations[0],
-//                testament = "Stary Testament",
-//                book = Book(0, "Ksiega Rodzaju", "Rdz"),
-//                chapter = "1"
-//            )
-//        )
-//    }
 
-//    val selectedValue2 = remember {
-//        mutableStateOf(
-//            UserSelection(
-//                translation = selectedValue1.value.translation,
-//                testament = selectedValue1.value.testament,
-//                book = selectedValue1.value.book,
-//                chapter = selectedValue1.value.chapter
-//            )
-//        )
-//    }
     Column(modifier = Modifier.fillMaxWidth(1f)) {
 
         // TODO add different way of selecting the Bible
@@ -83,14 +65,27 @@ fun HomePage(navController: NavController, viewModel: UserSelectionViewmodel = v
             selectedValue2,
             translations,
             onValueChangedEvent = {
-//                selectedValue1.value = it
                 viewModel.updateBottomSelection(it)
             },
             selectedValue1)
         Spacer(Modifier.padding(40.dp))
+
+        Button(onClick = {
+            // TODO navigation in HomePage -> ReadPage
+            viewModel.changeSelectedTab(1)
+            navController.navigate(viewModel.topLevelRoutes[1].route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        })
+        {
+            Text("Read")
+        }
     }
 }
-
 
 // TODO Scraper needs internet connection, otherwise app doesn't open
 @OptIn(ExperimentalMaterial3Api::class)
@@ -175,7 +170,6 @@ fun SelectionBox(
                         }
                     }
                     selectedValue.testament = previousSelection.testament
-                    // TODO needs to be reworked with scraping
                     val secondBookOptions = scrapeForBook(selectedValue.translation, selectedValue.testament)
                     selectedValue.book = secondBookOptions[previousSelection.book.index]
                     selectedValue.chapter = previousSelection.chapter
@@ -301,21 +295,23 @@ fun SelectionBox(
                     )
                     {
                         // create list of chapters according to the translation
-                        skrape(HttpFetcher)
-                        {
-                            request {
-                                url = "http://biblia-online.pl/${selectedValue.book.url}"
-                                timeout = 5000
-                            }
-                            response {
-                                htmlDocument {
-                                    div {
-                                        withClass = "mnav-chptrs-cell"
-                                        findFirst {
-                                            this.a {
-                                                findAll {
-                                                    forEach {
-                                                        chapterOptions.add(it.text)
+                        try {
+                            skrape(HttpFetcher)
+                            {
+                                request {
+                                    url = "http://biblia-online.pl/${selectedValue.book.url}"
+                                    timeout = 5000
+                                }
+                                response {
+                                    htmlDocument {
+                                        div {
+                                            withClass = "mnav-chptrs-cell"
+                                            findFirst {
+                                                this.a {
+                                                    findAll {
+                                                        forEach {
+                                                            chapterOptions.add(it.text)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -324,6 +320,11 @@ fun SelectionBox(
                                 }
                             }
                         }
+                        catch (e: Exception)
+                        {
+                            ErrorPage(e.message)
+                        }
+
                         chapterOptions.forEach { option: String ->
                             DropdownMenuItem(
                                 text = { Text(text = option) },
@@ -342,65 +343,68 @@ fun SelectionBox(
 
 }
 
+@Composable
 fun scrapeForBook(translation: String, testament: String) : MutableList<Book> {
     val bookOptions: MutableList<Book> = ArrayList()
     // create list of chapters according to the translation
-    skrape(HttpFetcher)
-    {
-        request {
-            if(translation!="")
-                url = "http://biblia-online.pl/Biblia/ListaKsiag/${translation}/"
-            else
-                return@request
-        }
-        response {
-            htmlDocument {
-                div {
-                    withId = "ot-books-list"
-                    if (testament == "Stary Testament") {
-                        findFirst {
-                            this.div {
-                                withClass = "book-list-item"
-                                findAll {
-                                    forEachIndexed { index, it ->
-                                        val fullBookName =
-                                            it.findFirst("a").text
-                                        val abbrBookName =
-                                            it.findFirst("span").text
-                                        val url =
-                                            it.findFirst("a").attribute("href")
-                                        bookOptions.add(
-                                            Book(
-                                                index,
-                                                fullBookName,
-                                                abbrBookName,
-                                                url
+    try{
+        skrape(HttpFetcher)
+        {
+            request {
+                if(translation!="")
+                    url = "http://biblia-online.pl/Biblia/ListaKsiag/${translation}/"
+                else
+                    return@request
+            }
+            response {
+                htmlDocument {
+                    div {
+                        withId = "ot-books-list"
+                        if (testament == "Stary Testament") {
+                            findFirst {
+                                this.div {
+                                    withClass = "book-list-item"
+                                    findAll {
+                                        forEachIndexed { index, it ->
+                                            val fullBookName =
+                                                it.findFirst("a").text
+                                            val abbrBookName =
+                                                it.findFirst("span").text
+                                            val url =
+                                                it.findFirst("a").attribute("href")
+                                            bookOptions.add(
+                                                Book(
+                                                    index,
+                                                    fullBookName,
+                                                    abbrBookName,
+                                                    url
+                                                )
                                             )
-                                        )
+                                        }
                                     }
                                 }
                             }
-                        }
-                    } else {
-                        findSecond {
-                            this.div {
-                                withClass = "book-list-item"
-                                findAll {
-                                    forEachIndexed { index, it ->
-                                        val fullBookName =
-                                            it.findFirst("a").text
-                                        val abbrBookName =
-                                            it.findFirst("span").text
-                                        val url =
-                                            it.findFirst("a").attribute("href")
-                                        bookOptions.add(
-                                            Book(
-                                                index,
-                                                fullBookName,
-                                                abbrBookName,
-                                                url
+                        } else {
+                            findSecond {
+                                this.div {
+                                    withClass = "book-list-item"
+                                    findAll {
+                                        forEachIndexed { index, it ->
+                                            val fullBookName =
+                                                it.findFirst("a").text
+                                            val abbrBookName =
+                                                it.findFirst("span").text
+                                            val url =
+                                                it.findFirst("a").attribute("href")
+                                            bookOptions.add(
+                                                Book(
+                                                    index,
+                                                    fullBookName,
+                                                    abbrBookName,
+                                                    url
+                                                )
                                             )
-                                        )
+                                        }
                                     }
                                 }
                             }
@@ -409,6 +413,11 @@ fun scrapeForBook(translation: String, testament: String) : MutableList<Book> {
                 }
             }
         }
+    }
+    catch (e: Exception)
+    {
+        e.message?.let { Log.d("error scraping", it) }
+        ErrorPage(e.message)
     }
     return bookOptions
 }
