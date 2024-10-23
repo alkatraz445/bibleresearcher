@@ -73,7 +73,6 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
         Spacer(Modifier.padding(40.dp))
 
         Button(onClick = {
-            // TODO navigation in HomePage -> ReadPage
             viewModel.changeSelectedTab(1)
             navController.navigate(viewModel.topLevelRoutes[1].route) {
                 popUpTo(navController.graph.findStartDestination().id) {
@@ -89,7 +88,6 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
     }
 }
 
-// TODO Scraper needs internet connection, otherwise app doesn't open
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectionBox(

@@ -52,8 +52,6 @@ data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem
 
 class MainViewModel(context : Context) : ViewModel()
 {
-    // TODO These values have to be saved even after closing the application
-
     private var dataStore: DataStore<Preferences> = createDataStore(context)
 
     private val _selectedTab = MutableStateFlow<Int>(0)

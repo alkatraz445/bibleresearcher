@@ -111,7 +111,6 @@ fun Navigation(
 
             composable<ReaderScreen>
             {
-                // TODO crashes if user didn't change the values on main screen - fix
                 ReadPage(navController, viewModel)
             }
 
