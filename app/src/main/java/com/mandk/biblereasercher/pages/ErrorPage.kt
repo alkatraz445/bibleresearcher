@@ -1,4 +1,4 @@
-package com.mandk.biblereasercher
+package com.mandk.biblereasercher.pages
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ fun ErrorPage(message: String? = "Something went wrong"){
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Something went wrong")
+            Text(text = message ?: "Brak połączenia z internetem", modifier = Modifier.padding(8.dp),style = MaterialTheme.typography.displaySmall)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
