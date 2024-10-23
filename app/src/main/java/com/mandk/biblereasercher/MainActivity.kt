@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import com.example.compose.AppTheme
@@ -30,13 +29,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
         setContent {
             AppTheme(darkTheme = true)
             {
                 if (isConnected) {
-                    Navigation(remember { createDataStore(applicationContext) })  // Show the navigation screen if connected
+                    Navigation(applicationContext)  // Show the navigation screen if connected
                 } else {
                     ErrorPage("No Internet Connection")  // Show the error screen if not connected
                 }
@@ -55,6 +53,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
 fun isOnline(context: Context): Boolean {

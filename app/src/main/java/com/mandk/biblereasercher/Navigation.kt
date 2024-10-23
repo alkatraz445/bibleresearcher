@@ -1,5 +1,6 @@
 package com.mandk.biblereasercher
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BadgedBox
@@ -12,11 +13,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -30,21 +29,13 @@ class Werset(var text: String, var nr: String) {
     }
 }
 
-data class Book(
-    val index: Int,
-    val fullName: String,
-    val abbrName: String,
-    val url: String? = null
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation(
-    prefs : DataStore<Preferences>
+    context: Context
 ) {
-    val scope  = rememberCoroutineScope()
     val navController = rememberNavController()
-    val viewModel = MainViewModel()
+    val viewModel = remember { MainViewModel(context) }
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
     val selectedTabKey = intPreferencesKey("selected_tab")
 //    val selectedTab by preferences
@@ -120,6 +111,7 @@ fun Navigation(
 
             composable<ReaderScreen>
             {
+                // TODO crashes if user didn't change the values on main screen - fix
                 ReadPage(navController, viewModel)
             }
 

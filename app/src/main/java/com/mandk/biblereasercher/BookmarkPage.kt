@@ -47,7 +47,7 @@ fun BookmarkPage(navController: NavController, viewModel: MainViewModel = viewMo
             verticalArrangement = Arrangement.Bottom
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Top selection: ${topSelection.translation}, ${topSelection.book.abbrName}, ${topSelection.chapter}")
+                Text(text = "Top selection: ${topSelection.translation}, ${topSelection.book?.abbrName}, ${topSelection.chapter}")
             }
             Spacer(modifier = Modifier.padding(16.dp))
             Row(
@@ -55,7 +55,7 @@ fun BookmarkPage(navController: NavController, viewModel: MainViewModel = viewMo
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Bottom selection: ${bottomSelection.translation}, ${bottomSelection.book.abbrName}, ${bottomSelection.chapter}")
+                Text(text = "Bottom selection: ${bottomSelection.translation}, ${bottomSelection.book?.abbrName}, ${bottomSelection.chapter}")
             }
         }
     }

@@ -38,7 +38,7 @@ fun skrapeText(selectedValue : UserSelection) : String {
         // make an HTTP GET request to the specified URL
         request {
             // TODO Has to be dynamically changed by the user
-            val temp = "http://biblia-online.pl/${selectedValue.book.url}"
+            val temp = "http://biblia-online.pl/${selectedValue.book?.url}"
             url = temp.substring(0, temp.length - 4) + "/${selectedValue.chapter}"
             Log.d("connected at", url)
         }
@@ -139,8 +139,8 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
             onSwipeRight =
             {
                 Log.d("r", "right")
-                selectedValue1.chapter = (selectedValue1.chapter.toInt() - 1).toString()
-                selectedValue2.chapter = (selectedValue2.chapter.toInt() - 1).toString()
+                selectedValue1.chapter = ((selectedValue1.chapter?.toInt()?: 0) - 1).toString()
+                selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) - 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 =  skrapeText(selectedValue1)
@@ -149,8 +149,8 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
             onSwipeLeft =
             {
                 Log.d("l", "left")
-                selectedValue1.chapter = (selectedValue1.chapter.toInt() + 1).toString()
-                selectedValue2.chapter = (selectedValue2.chapter.toInt() + 1).toString()
+                selectedValue1.chapter = ((selectedValue1.chapter?.toInt()?: 0) + 1).toString()
+                selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) + 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 =  skrapeText(selectedValue1)

@@ -46,8 +46,10 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
         "JakubaWujka",
         "Brzeska"
     )
+
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val selectedValue2 by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
+
 
     Column(modifier = Modifier.fillMaxWidth(1f)) {
 
@@ -125,7 +127,7 @@ fun SelectionBox(
                         enabled = false,
                         readOnly = true,
                         singleLine = true,
-                        value = "${selectedValue.translation}, ${selectedValue.book.abbrName}, ${selectedValue.chapter}",
+                        value = "${selectedValue.translation}, ${selectedValue.book?.abbrName?: ""}, ${selectedValue.chapter}",
                         onValueChange = {},
                         label = {
                             Text(
@@ -170,10 +172,10 @@ fun SelectionBox(
                         }
                     }
                     selectedValue.testament = previousSelection.testament
-                    val secondBookOptions = scrapeForBook(selectedValue.translation, selectedValue.testament)
-                    selectedValue.book = secondBookOptions[previousSelection.book.index]
+                    val secondBookOptions = scrapeForBook(selectedValue.translation ?:"", selectedValue.testament?:"")
+                    selectedValue.book = secondBookOptions[previousSelection.book?.index?: 0]
                     selectedValue.chapter = previousSelection.chapter
-
+                    onValueChangedEvent(selectedValue)
                 }
             }
             else
@@ -190,7 +192,7 @@ fun SelectionBox(
                         enabled = false,
                         readOnly = true,
                         singleLine = true,
-                        value = "${selectedValue.translation}, ${selectedValue.book.abbrName}, ${selectedValue.chapter}",
+                        value = "${selectedValue.translation}, ${selectedValue.book?.abbrName?: ""}, ${selectedValue.chapter}",
                         onValueChange = {},
                         label = {
                             Text(
@@ -270,10 +272,10 @@ fun SelectionBox(
                         modifier = Modifier.exposedDropdownSize()
                     )
                     {
-                        bookOptions = scrapeForBook(selectedValue.translation, selectedValue.testament)
+                        bookOptions = scrapeForBook(selectedValue.translation?: "", selectedValue.testament?: "")
                         bookOptions.forEach { option: Book ->
                             DropdownMenuItem(
-                                text = { Text(text = option.fullName) },
+                                text = { Text(text = option.fullName?: "") },
                                 onClick = {
                                     expandedBookMenu = false
                                     selectedValue.book = option
@@ -299,7 +301,7 @@ fun SelectionBox(
                             skrape(HttpFetcher)
                             {
                                 request {
-                                    url = "http://biblia-online.pl/${selectedValue.book.url}"
+                                    url = "http://biblia-online.pl/${selectedValue.book?.url?: ""}"
                                     timeout = 5000
                                 }
                                 response {
