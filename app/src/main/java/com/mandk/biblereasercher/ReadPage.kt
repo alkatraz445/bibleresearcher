@@ -191,7 +191,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                             Text(
                                 modifier = Modifier
                                     .verticalScroll(scrollState),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.displaySmall,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 text = textOnScreen1,
                             )
@@ -229,7 +229,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                                     .verticalScroll(scrollState),
                                 text = textOnScreen2,
                                 color = MaterialTheme.colorScheme.onSurface,
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.displaySmall
                             )
                         }
                     }

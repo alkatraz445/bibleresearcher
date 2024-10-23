@@ -1,7 +1,9 @@
 package com.mandk.biblereasercher
 
 import android.util.Log
+import android.widget.Space
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
@@ -52,6 +55,7 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
 
 
     Column(modifier = Modifier.fillMaxWidth(1f)) {
+        Spacer(modifier = Modifier.padding(40.dp))
 
         // TODO add different way of selecting the Bible
         SelectionBox(
@@ -72,18 +76,20 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
             selectedValue1)
         Spacer(Modifier.padding(40.dp))
 
-        Button(onClick = {
-            viewModel.changeSelectedTab(1)
-            navController.navigate(viewModel.topLevelRoutes[1].route) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
+        Column(modifier = Modifier.fillMaxWidth(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+            Button(onClick = {
+                viewModel.changeSelectedTab(1)
+                navController.navigate(viewModel.topLevelRoutes[1].route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
                 }
-                launchSingleTop = true
-                restoreState = true
+            })
+            {
+                Text("Przeczytaj")
             }
-        })
-        {
-            Text("Read")
         }
     }
 }
@@ -130,7 +136,7 @@ fun SelectionBox(
                         label = {
                             Text(
                                 style = MaterialTheme.typography.labelMedium, // TODO font to be changed
-                                text = "Tłumaczenie"
+                                text = "Drugie tłumaczenie"
                             )
                         },
 
@@ -195,7 +201,7 @@ fun SelectionBox(
                         label = {
                             Text(
                                 style = MaterialTheme.typography.labelMedium, // TODO font to be changed
-                                text = "Tłumaczenie"
+                                text = "Pierwsze tłumaczenie"
                             )
                         },
 

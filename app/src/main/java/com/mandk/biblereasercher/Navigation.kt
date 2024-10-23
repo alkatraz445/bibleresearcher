@@ -118,9 +118,6 @@ fun Navigation(
                 BookmarkPage(navController, viewModel)
             }
 
-            composable<SettingsScreen> {
-                SettingsPage(navController)
-            }
         }
     }
 }

@@ -91,15 +91,6 @@ class MainViewModel(context : Context) : ViewModel()
             ),
             BookmarkScreen
         ),
-        TopLevelRoute(
-            BottomNavigationItem(
-                title = "Ustawienia",
-                selectedIcon = Icons.Filled.Settings,
-                unselectedIcon = Icons.Outlined.Settings,
-                hasNews = false
-            ),
-            SettingsScreen
-        )
     )
 
     private val _topSelectionState = MutableStateFlow(
