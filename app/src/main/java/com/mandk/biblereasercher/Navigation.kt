@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -38,21 +37,13 @@ fun Navigation(
     val navController = rememberNavController()
     val viewModel = remember { MainViewModel(context) }
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
-    val selectedTabKey = intPreferencesKey("selected_tab")
-//    val selectedTab by preferences
-//            .data
-//            .map{
-//                it[selectedTabKey] ?: 0
-//            }
-//            .collectAsState(0)
-//    viewModel.changeSelectedTab(selectedTab)
 
     Scaffold(
         modifier = Modifier.padding(top = 50.dp),
         topBar = {
             Text(
                 modifier = Modifier.padding(top = 40.dp),
-                text = topTitle(viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
+                text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -71,11 +62,6 @@ fun Navigation(
                                 launchSingleTop = true
                                 restoreState = true
                             }
-//                            scope.launch {
-//                                prefs.edit {
-//                                    it[selectedTabKey] = index
-//                                }
-//                            }
                         },
                         icon = {
                             BadgedBox(
@@ -123,12 +109,14 @@ fun Navigation(
     }
 }
 
-fun topTitle(string: String) : String
+fun topTitle(viewModel: MainViewModel, string: String) : String
 {
+    val selectedValue = viewModel.topSelectionState.value
+
     when(string)
     {
         "Dom" -> return "Bible Researcher"
-        "Pismo" -> return string
+        "Pismo" -> return "${selectedValue.translation?.name?: ""}, ${selectedValue.book?.abbrName?: ""}, ${selectedValue.chapter}"
         "Zakładki" -> return string
         "Ustawienia" -> return string
     }

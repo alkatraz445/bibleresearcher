@@ -19,15 +19,6 @@ import it.skrape.selects.html5.ul
 
 class ScraperClass : Scraper {
 
-    val websiteForBible = "http://biblia-online.pl/Biblia/"
-    val translations = listOf(
-        "Tysiaclecia",
-        "UwspolczesnionaBibliaGdanska",
-        "Warszawska",
-        "JakubaWujka",
-        "Brzeska"
-    )
-
     @Composable
     override fun scrapeForTranslations() : MutableList<Translation> {
         val translations: MutableList<Translation> = mutableListOf(Translation("Biblia Tysiąclecia", "/Biblia/Tysiaclecia"))
@@ -74,6 +65,7 @@ class ScraperClass : Scraper {
         }
         catch (e: Exception)
         {
+            e.message?.let { Log.d("error scraping translations", it) }
             ErrorPage(e.message)
         }
         return translations
@@ -110,6 +102,7 @@ class ScraperClass : Scraper {
         }
         catch (e: Exception)
         {
+            e.message?.let { Log.d("error scraping chapters", it) }
             ErrorPage(e.message)
         }
         return chapterOptions
@@ -190,42 +183,51 @@ class ScraperClass : Scraper {
         }
         catch (e: Exception)
         {
-            e.message?.let { Log.d("error scraping", it) }
+            e.message?.let { Log.d("error scraping books", it) }
             ErrorPage(e.message)
         }
         return bookOptions
     }
 
+
     override fun skrapeText(selectedValue : UserSelection) : String {
         var textOnScreen = ""
-        skrape(HttpFetcher) {
-            // make an HTTP GET request to the specified URL
-            request {
-                // TODO Has to be dynamically changed by the user
-                val temp = "http://biblia-online.pl/${selectedValue.book?.url}"
-                url = temp.substring(0, temp.length - 4) + "/${selectedValue.chapter}"
-                Log.d("connected at", url)
-            }
-            response {
-                htmlDocument {
-                    "div.vr" {
-                        findAll {
-                            forEach {
-                                val text = it.findFirst(".vtbl-txt").text
-                                val nr = it.findFirst(".vtbl-num").text
-                                textOnScreen += "$nr: $text\n"
+        try{
+            skrape(HttpFetcher) {
+                // make an HTTP GET request to the specified URL
+                request {
+                    // TODO Has to be dynamically changed by the user
+                    val temp = "http://biblia-online.pl/${selectedValue.book?.url}"
+                    url = temp.substring(0, temp.length - 4) + "/${selectedValue.chapter}"
+                    Log.d("connected at", url)
+                }
+                response {
+                    htmlDocument {
+                        "div.vr" {
+                            findAll {
+                                forEach {
+                                    val text = it.findFirst(".vtbl-txt").text
+                                    val nr = it.findFirst(".vtbl-num").text
+                                    textOnScreen += "$nr: $text\n"
 //                            werset = Werset(
 //                                text = text,
 //                                nr = nr
 //                            )
 //                            rozdzial.add(werset)
 //                            werset.printWerset()
+                                }
                             }
                         }
                     }
                 }
             }
         }
+        catch (e: Exception)
+        {
+            // TODO has to navigate to ErrorPage if failed
+            e.message?.let { Log.d("error scraping text", it) }
+        }
+
         return textOnScreen
     }
 
