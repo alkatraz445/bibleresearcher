@@ -7,8 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import com.example.compose.AppTheme
 import com.mandk.biblereasercher.components.ConnectivityStatus
 import com.mandk.biblereasercher.pages.ErrorPage
@@ -26,7 +24,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        TODO: this does not work, and crashes the app
-        val connectivityObserver = NetworkConnectivityObserver(application = application)
+        connectivityObserver = NetworkConnectivityObserver(application = application)
         enableEdgeToEdge()
         setContent {
 //            TODO: move to Navigation.kt

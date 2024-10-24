@@ -27,43 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import it.skrape.core.htmlDocument
-import it.skrape.fetcher.HttpFetcher
-import it.skrape.fetcher.response
-import it.skrape.fetcher.skrape
-
-fun skrapeText(selectedValue : UserSelection) : String {
-    var textOnScreen = ""
-    skrape(HttpFetcher) {
-        // make an HTTP GET request to the specified URL
-        request {
-            // TODO Has to be dynamically changed by the user
-            val temp = "http://biblia-online.pl/${selectedValue.book?.url}"
-            url = temp.substring(0, temp.length - 4) + "/${selectedValue.chapter}"
-            Log.d("connected at", url)
-        }
-        response {
-            htmlDocument {
-                "div.vr" {
-                    findAll {
-                        forEach {
-                            val text = it.findFirst(".vtbl-txt").text
-                            val nr = it.findFirst(".vtbl-num").text
-                            textOnScreen += "$nr: $text\n"
-//                            werset = Werset(
-//                                text = text,
-//                                nr = nr
-//                            )
-//                            rozdzial.add(werset)
-//                            werset.printWerset()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return textOnScreen
-}
+import com.mandk.biblereasercher.utils.Scraper
+import com.mandk.biblereasercher.utils.ScraperClass
 
 @Composable
 fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
@@ -74,61 +39,10 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val selectedValue2 by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
 
-    var textOnScreen1 by remember { mutableStateOf(skrapeText(selectedValue1)) }
-    var textOnScreen2 by remember { mutableStateOf(skrapeText(selectedValue2)) }
-//    skrape(HttpFetcher) {
-//        // make an HTTP GET request to the specified URL
-//        request {
-//            // TODO Has to be dynamically changed by the user
-//            val temp = "http://biblia-online.pl/${selectedValue1.book.url}"
-//            url = temp.substring(0, temp.length-4) + "/${selectedValue1.chapter}"
-//            Log.d("connected at", url)
-//        }
-//        response {
-//            htmlDocument {
-//                "div.vr" {
-//                    findAll {
-//                        forEach {
-//                            val text = it.findFirst(".vtbl-txt").text
-//                            val nr = it.findFirst(".vtbl-num").text
-//                            textOnScreen1 += "$nr: $text\n"
-////                            werset = Werset(
-////                                text = text,
-////                                nr = nr
-////                            )
-////                            rozdzial.add(werset)
-////                            werset.printWerset()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        request {
-//            // TODO Has to be dynamically changed by the user
-//            val temp = "http://biblia-online.pl/${selectedValue2.book.url}"
-//            url = temp.substring(0, temp.length-4) + "/${selectedValue2.chapter}"
-//            Log.d("connected at", url)
-//        }
-//        response {
-//            htmlDocument {
-//                "div.vr" {
-//                    findAll {
-//                        forEach {
-//                            val text = it.findFirst(".vtbl-txt").text
-//                            val nr = it.findFirst(".vtbl-num").text
-//                            textOnScreen2 += "$nr: $text\n"
-////                            werset = Werset(
-////                                text = text,
-////                                nr = nr
-////                            )
-////                            rozdzial.add(werset)
-////                            werset.printWerset()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    val scraper : Scraper = ScraperClass()
+
+    var textOnScreen1 by remember { mutableStateOf(scraper.skrapeText(selectedValue1)) }
+    var textOnScreen2 by remember { mutableStateOf(scraper.skrapeText(selectedValue2)) }
 
     Surface(
         modifier = Modifier
@@ -143,8 +57,8 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) - 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
-                textOnScreen1 =  skrapeText(selectedValue1)
-                textOnScreen2 = skrapeText(selectedValue2)
+                textOnScreen1 = scraper.skrapeText(selectedValue1)
+                textOnScreen2 = scraper.skrapeText(selectedValue2)
             },
             onSwipeLeft =
             {
@@ -153,8 +67,8 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) + 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
-                textOnScreen1 =  skrapeText(selectedValue1)
-                textOnScreen2 = skrapeText(selectedValue2)
+                textOnScreen1 = scraper.skrapeText(selectedValue1)
+                textOnScreen2 = scraper.skrapeText(selectedValue2)
             })
         {
 
@@ -186,7 +100,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
-                                text = "Biblia ${selectedValue1.translation}"
+                                text = "${selectedValue1.translation?.name}"
                             )
                             Text(
                                 modifier = Modifier
@@ -222,7 +136,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
-                                text = "Biblia ${selectedValue2.translation}"
+                                text = "${selectedValue2.translation?.name}"
                             )
                             Text(
                                 modifier = Modifier

@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.sharp.ImportContacts
 import androidx.compose.material.icons.twotone.ImportContacts
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -24,6 +22,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+data class Translation(
+    val name: String? = "",
+    val url: String? = ""
+)
+
 data class Book(
     val index: Int? = 0,
     val fullName: String? = "",
@@ -32,7 +35,7 @@ data class Book(
 )
 
 data class UserSelection(
-    var translation: String? = "",
+    var translation: Translation? = Translation("", ""),
     var testament: String? = "",
     var book: Book? = Book(0, "","", ""),
     var chapter: String? = "",
@@ -95,7 +98,7 @@ class MainViewModel(context : Context) : ViewModel()
 
     private val _topSelectionState = MutableStateFlow(
         UserSelection( // Initial state, can be placeholder values
-            translation = "Tysiaclecia",
+            translation = Translation("Biblia Tysiąclecia", "/Biblia/Tysiaclecia"),
             testament = "Stary Testament",
             book = Book(0, "Ksiega Rodzaju", "Rdz", "/Biblia/Tysiaclecia/Ksiega-Rodzaju"),
             chapter = "1"
@@ -116,7 +119,11 @@ class MainViewModel(context : Context) : ViewModel()
     init {
         viewModelScope.launch {
             val userSelection1 = UserSelection(
-                translation = read("top_selection_translation")?:"Tysiaclecia",
+                translation =
+                    Translation(
+                        name = read("top_selection_translation_name")?: "Biblia Tysiaclecia",
+                        url = read("top_selection_translation_url")?: "/Biblia/Tysiaclecia"
+                    ),
                 testament = read("top_selection_testament")?:"Stary Testament",
                 book = Book(
                     read("top_selection_book_index")?.toInt() ?: 0,
@@ -127,7 +134,11 @@ class MainViewModel(context : Context) : ViewModel()
                 chapter = read("top_selection_chapter")?:"1"
             )
             val userSelection2 = UserSelection(
-                translation = read("bottom_selection_translation")?:"Tysiaclecia",
+                translation =
+                Translation(
+                    name = read("bottom_selection_translation_name")?: "Biblia Tysiaclecia",
+                    url = read("bottom_selection_translation_url")?: "/Biblia/Tysiaclecia"
+                ),
                 testament = read("bottom_selection_testament")?:"Stary Testament",
                 book = Book(
                     read("bottom_selection_book_index")?.toInt() ?: 0,
@@ -153,7 +164,8 @@ class MainViewModel(context : Context) : ViewModel()
             )
         }
         viewModelScope.launch {
-            save("top_selection_translation",       value.translation ?: "")
+            save("top_selection_translation_name",  value.translation?.name ?: "")
+            save("top_selection_translation_url",   value.translation?.url ?: "")
             save("top_selection_testament",         value.testament?: "")
             save("top_selection_book_index",        value.book?.index.toString())
             save("top_selection_book_name",         value.book?.fullName ?: "")
@@ -174,7 +186,8 @@ class MainViewModel(context : Context) : ViewModel()
             )
         }
         viewModelScope.launch {
-            save("bottom_selection_translation",       value.translation ?: "")
+            save("bottom_selection_translation_name",  value.translation?.name ?: "")
+            save("bottom_selection_translation_url",   value.translation?.url ?: "")
             save("bottom_selection_testament",         value.testament?: "")
             save("bottom_selection_book_index",        value.book?.index.toString())
             save("bottom_selection_book_name",         value.book?.fullName ?: "")
