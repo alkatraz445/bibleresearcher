@@ -52,20 +52,34 @@ data class BottomNavigationItem(
 
 data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem, val route: T)
 
-
+/**
+ * Main ViewModel of the application
+ *
+ * Used to share data between screens as well as to save preferences
+ *
+ * @param context - Context in which DataStore<Preferences> can be created; without it saves wouldn't work
+ */
 class MainViewModel(context : Context) : ViewModel()
 {
     private var dataStore: DataStore<Preferences> = createDataStore(context)
 
+    /** Stores which Tab is selected*/
     private val _selectedTab = MutableStateFlow<Int>(0)
 
+    /** Stores which Tab is selected, but is mutable and public*/
     val selectedTab: StateFlow<Int> = _selectedTab.asStateFlow()
 
+    /**
+     * Function to update selected Tab
+     *
+     * @param value - Int representing index of the Tab
+     */
     fun changeSelectedTab(value : Int)
     {
         _selectedTab.update { value }
     }
 
+    /** variable with a list of all routes in the Navigation*/
     val topLevelRoutes = listOf(
         TopLevelRoute(
             BottomNavigationItem(
@@ -96,6 +110,7 @@ class MainViewModel(context : Context) : ViewModel()
         ),
     )
 
+    /** Top selection state of HomePage */
     private val _topSelectionState = MutableStateFlow(
         UserSelection( // Initial state, can be placeholder values
             translation = Translation("Biblia Tysiąclecia", "/Biblia/Tysiaclecia"),
@@ -104,6 +119,8 @@ class MainViewModel(context : Context) : ViewModel()
             chapter = "1"
         )
     )
+
+    /** Bottom selection state of HomePage */
     private val _bottomSelectionState = MutableStateFlow(
         UserSelection( // Initial state, can be placeholder values
             translation = _topSelectionState.value.translation,
@@ -113,7 +130,9 @@ class MainViewModel(context : Context) : ViewModel()
         )
     )
 
+    /** Top selection state of HomePage, but public */
     val topSelectionState: StateFlow<UserSelection> = _topSelectionState.asStateFlow()
+    /** Bottom selection state of HomePage, but public */
     val bottomSelectionState: StateFlow<UserSelection> = _bottomSelectionState.asStateFlow()
 
     init {
@@ -153,6 +172,13 @@ class MainViewModel(context : Context) : ViewModel()
         }
     }
 
+    /**
+     * Function used to:
+     * - update top selection
+     * - save values of top selection to Preferences
+     *
+     * @param value - UserSelection
+     */
     fun updateTopSelection(value : UserSelection)
     {
         _topSelectionState.update { currentState ->
@@ -175,6 +201,13 @@ class MainViewModel(context : Context) : ViewModel()
         }
     }
 
+    /**
+     * Function used to:
+     * - update bottom selection
+     * - save values of bottom selection to Preferences
+     *
+     * @param value - UserSelection
+     */
     fun updateBottomSelection(value : UserSelection)
     {
         _bottomSelectionState.update { currentState ->
@@ -197,6 +230,12 @@ class MainViewModel(context : Context) : ViewModel()
         }
     }
 
+    /**
+     * Function used to save value to a specified key
+     *
+     * @param key - unique, identifying key of a Preference
+     * @param value - value to store in key
+     */
     private suspend fun save(key: String, value: String)
     {
         val dataStoreKey = stringPreferencesKey(key)
@@ -205,6 +244,12 @@ class MainViewModel(context : Context) : ViewModel()
         }
     }
 
+    /**
+     * Function used to read value from a specified key
+     *
+     * @param key - unique, identifying key of a Preference
+     * @return nullable String - so if there is no value returns null
+     */
     private suspend fun read(key: String) : String?
     {
         val dataStoreKey = stringPreferencesKey(key)

@@ -16,7 +16,11 @@ import it.skrape.selects.html5.li
 import it.skrape.selects.html5.ul
 
 
-
+/**
+ * Implementation of interface Scraper
+ *
+ * Used as a utility to scrape data from website
+ */
 class ScraperClass : Scraper {
 
     @Composable
