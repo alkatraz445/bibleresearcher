@@ -13,9 +13,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,8 +34,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.compose.AppTheme
 import com.mandk.biblereasercher.pages.BookmarkPage
+import com.mandk.biblereasercher.utils.AppDatabase
 
 class Werset(var text: String, var nr: String) {
     fun printWerset() {
@@ -47,9 +51,15 @@ fun Navigation(
     context: Context
 ) {
     val navController = rememberNavController()
-    val viewModel = remember { MainViewModel(context) }
-    val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
 
+    val dataBase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "bookmarks"
+        ).build()
+
+    val viewModel = remember { MainViewModel(context, dataBase = dataBase) }
+    val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
 
     AppTheme(
         darkTheme = viewModel.darkMode.collectAsStateWithLifecycle().value,
@@ -78,7 +88,16 @@ fun Navigation(
                             color = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                    2 -> {}
+                    2 -> {
+                        IconButton(
+                            onClick = {
+                                viewModel.addBookmark(viewModel.topSelectionState.value)
+                            },
+                            content = { Icon(
+                                imageVector = Icons.Outlined.Bookmark,
+                                contentDescription = "bookmark_button") }
+                        )
+                    }
                 }
 
             },
