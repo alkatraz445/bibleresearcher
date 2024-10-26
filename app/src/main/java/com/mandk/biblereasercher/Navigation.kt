@@ -31,6 +31,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.AppTheme
 import com.mandk.biblereasercher.pages.BookmarkPage
 
 class Werset(var text: String, var nr: String) {
@@ -48,90 +49,96 @@ fun Navigation(
     val viewModel = remember { MainViewModel(context) }
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
 
-    if (viewModel.settingsUiState.collectAsStateWithLifecycle().value) {
-        SettingsDialog(
-            onDismiss = { viewModel.changeSettingUiState(false) },
-            viewModel
-        )
-    }
 
-    Scaffold(
-        modifier = Modifier.padding(top = 50.dp),
-        topBar = {
-            // different top bars for each selectedTab
-            when (selectedTab){
-                0 -> {
-                    TopBarHome()
+    AppTheme(
+        darkTheme = viewModel.darkMode.collectAsStateWithLifecycle().value,
+        dynamicColor = viewModel.dynamicColor.collectAsStateWithLifecycle().value
+    ) {
+        if (viewModel.settingsUiState.collectAsStateWithLifecycle().value) {
+            SettingsDialog(
+                onDismiss = { viewModel.changeSettingUiState(false) },
+                viewModel
+            )
+        }
+        Scaffold(
+            modifier = Modifier.padding(top = 50.dp),
+            topBar = {
+                // different top bars for each selectedTab
+                when (selectedTab){
+                    0 -> {
+                        TopBarHome()
+                    }
+                    1 -> {}
+                    2 -> {}
                 }
-                1 -> {}
-                2 -> {}
-            }
 //            Text(
 //                modifier = Modifier.padding(top = 40.dp),
 //                text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
 //                style = MaterialTheme.typography.titleLarge,
 //                color = MaterialTheme.colorScheme.onSurface
 //            )
-        },
-        bottomBar = {
-            NavigationBar {
-                viewModel.topLevelRoutes.forEachIndexed { index, topLevelRoute ->
-                    NavigationBarItem(
-                        selected = index == selectedTab,
-                        onClick = {
-                            viewModel.changeSelectedTab(index)
-                            navController.navigate(topLevelRoute.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            },
+            bottomBar = {
+                NavigationBar {
+                    viewModel.topLevelRoutes.forEachIndexed { index, topLevelRoute ->
+                        NavigationBarItem(
+                            selected = index == selectedTab,
+                            onClick = {
+                                viewModel.changeSelectedTab(index)
+                                navController.navigate(topLevelRoute.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = {
-                            BadgedBox(
-                                badge = {}
-                            ) {
-                                Icon(
-                                    imageVector = if (index == selectedTab) {
-                                        topLevelRoute.bottomNavigationItem.selectedIcon
-                                    } else topLevelRoute.bottomNavigationItem.unselectedIcon,
-                                    contentDescription = topLevelRoute.bottomNavigationItem.title
-                                )
-                            }
-                        },
-                        label = { Text(topLevelRoute.bottomNavigationItem.title) }
-                    )
+                            },
+                            icon = {
+                                BadgedBox(
+                                    badge = {}
+                                ) {
+                                    Icon(
+                                        imageVector = if (index == selectedTab) {
+                                            topLevelRoute.bottomNavigationItem.selectedIcon
+                                        } else topLevelRoute.bottomNavigationItem.unselectedIcon,
+                                        contentDescription = topLevelRoute.bottomNavigationItem.title
+                                    )
+                                }
+                            },
+                            label = { Text(topLevelRoute.bottomNavigationItem.title) }
+                        )
+                    }
                 }
             }
-        }
-    )
-    { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = HomeScreen,
-            modifier = Modifier
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding()
-                )
         )
-        {
-            composable<HomeScreen> {
-                HomePage(navController, viewModel)
-            }
-
-            composable<ReaderScreen>
+        { paddingValues ->
+            NavHost(
+                navController = navController,
+                startDestination = HomeScreen,
+                modifier = Modifier
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        bottom = paddingValues.calculateBottomPadding()
+                    )
+            )
             {
-                ReadPage(navController, viewModel)
-            }
+                composable<HomeScreen> {
+                    HomePage(navController, viewModel)
+                }
 
-            composable<BookmarkScreen> {
-                BookmarkPage(navController, viewModel)
-            }
+                composable<ReaderScreen>
+                {
+                    ReadPage(navController, viewModel)
+                }
 
+                composable<BookmarkScreen> {
+                    BookmarkPage(navController, viewModel)
+                }
+
+            }
         }
     }
+
 }
 
 fun topTitle(viewModel: MainViewModel, string: String) : String
