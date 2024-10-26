@@ -1,5 +1,6 @@
 package com.mandk.biblereasercher.pages
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,23 +17,24 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.compose.AppTheme
 import com.mandk.biblereasercher.MainViewModel
 
-val Bookmarks: List<String> = emptyList()
-
 @Composable
-fun BookmarkList(modifier: Modifier = Modifier, bookmarks: List<String> ){
+fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
+
+    val allBookmarks by viewModel.allBookmarks.collectAsStateWithLifecycle(initialValue = emptyList())
+
     Box {
         Column(modifier = modifier.padding(vertical = 8.dp)) {
-            if (bookmarks.isEmpty()) {
+            if (allBookmarks.isEmpty()) {
                 Text("Brak zakładek", modifier = Modifier.padding(vertical = 8.dp), lineHeight = 50.sp)
                 Text("Aby dodać zakładkę kliknij przycisk akcji podczas czytania tekstu", fontSize = 14.sp)
             } else {
-                bookmarks.forEach { bookmark ->
+                allBookmarks.forEach { bookmark ->
+                    Log.d("bookmark", bookmark.bookAbbrName?:"")
                     Row {
                         Text(
-                            bookmark,
+                            bookmark.bookAbbrName?:"",
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                         Spacer(modifier = Modifier.padding(8.dp))
@@ -45,52 +47,14 @@ fun BookmarkList(modifier: Modifier = Modifier, bookmarks: List<String> ){
     }
 
 @Composable
-fun BookmarkPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
+fun BookmarkPage(navController: NavController, viewModel: MainViewModel) {
     val topSelection by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val bottomSelection by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
-
-    AppTheme()
-    {
-        BookmarkList(modifier = Modifier, bookmarks = Bookmarks)
-//        Column(
-//            modifier = Modifier
-//                .fillMaxHeight(0.5f)
-//                .padding(0.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Top
-//        )
-//        {
-//            Row(modifier = Modifier.fillMaxWidth())
-//            {
-//
-//            }
-//
-//        }
-//        Column(
-//            modifier = Modifier
-//                .fillMaxHeight(0.5f)
-//                .padding(0.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Bottom
-//        ) {
-//            Row(modifier = Modifier.fillMaxWidth()) {
-//                Text(text = "Top selection: ${topSelection.translation}, ${topSelection.book?.abbrName}, ${topSelection.chapter}")
-//            }
-//            Spacer(modifier = Modifier.padding(16.dp))
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.Center
-//            ) {
-//                Text(text = "Bottom selection: ${bottomSelection.translation}, ${bottomSelection.book?.abbrName}, ${bottomSelection.chapter}")
-//            }
-//        }
-    }
+    BookmarkList(modifier = Modifier, viewModel)
 }
 
 @Preview(showBackground = true, widthDp = 320)
 @Composable
 fun BookmarkListPreview() {
-    BookmarkList(modifier = Modifier,listOf("1","2","3"))
-
+    BookmarkList(modifier = Modifier, viewModel())
 }

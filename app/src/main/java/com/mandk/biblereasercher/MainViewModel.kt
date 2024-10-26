@@ -1,6 +1,7 @@
 package com.mandk.biblereasercher
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Home
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mandk.biblereasercher.utils.AppDatabase
 import com.mandk.biblereasercher.utils.Bookmark
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -69,11 +71,16 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
 
     private val _dbDao = dataBase.bookmarksDao()
 
+    private val _bookmarkCount: Flow<Int> = _dbDao.getBookmarkCount()
+    val bookmarkCount : Flow<Int> = _bookmarkCount
+
+    private val _allBookmarks: Flow<List<Bookmark>> = _dbDao.getAll()
+    val allBookmarks : Flow<List<Bookmark>> = _allBookmarks
+
     fun addBookmark(value: UserSelection)
     {
         viewModelScope.launch {
             val bookmark = Bookmark(
-                _dbDao.getBookmarkCount(),
                 translationName = value.translation?.name,
                 translationUrl = value.translation?.url,
                 bookAbbrName = value.book?.abbrName,
@@ -81,9 +88,9 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
                 testament = value.testament,
                 chapter = value.chapter
             )
+            Log.d("inserting bookmark", bookmark.bookAbbrName?: "")
             _dbDao.insertOne(bookmark)
         }
-
     }
 
     fun removeBookmark(index: Int)
@@ -93,13 +100,6 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
         }
     }
 
-    fun getAllBookmarks() : List<Bookmark> {
-        var temp : List<Bookmark> = listOf()
-        viewModelScope.launch {
-            temp = _dbDao.getAll()
-        }
-        return temp
-    }
 
     /** Stores which Tab is selected*/
     private val _selectedTab = MutableStateFlow(0)

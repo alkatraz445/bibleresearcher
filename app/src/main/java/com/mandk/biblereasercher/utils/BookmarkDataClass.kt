@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 
 @Entity
@@ -24,7 +25,10 @@ data class Bookmark(
 @Dao
 interface BookmarkDao {
     @Query("SELECT * FROM bookmark")
-    suspend fun getAll(): List<Bookmark>
+    fun getAll(): Flow<List<Bookmark>>
+
+    @Query("SELECT COUNT(*) FROM bookmark")
+    fun getBookmarkCount() : Flow<Int>
 
     @Query("SELECT * FROM bookmark WHERE id == :bookmarkId")
     suspend fun loadById(bookmarkId: Int): Bookmark
@@ -38,6 +42,4 @@ interface BookmarkDao {
     @Delete
     suspend fun delete(bookmark: Bookmark)
 
-    @Query("SELECT COUNT(*) FROM bookmark")
-    suspend fun getBookmarkCount() : Int
 }
