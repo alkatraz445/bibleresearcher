@@ -2,11 +2,20 @@ package com.mandk.biblereasercher
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -14,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,15 +48,30 @@ fun Navigation(
     val viewModel = remember { MainViewModel(context) }
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
 
+    if (viewModel.settingsUiState.collectAsStateWithLifecycle().value) {
+        SettingsDialog(
+            onDismiss = { viewModel.changeSettingUiState(false) },
+            viewModel
+        )
+    }
+
     Scaffold(
         modifier = Modifier.padding(top = 50.dp),
         topBar = {
-            Text(
-                modifier = Modifier.padding(top = 40.dp),
-                text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            // different top bars for each selectedTab
+            when (selectedTab){
+                0 -> {
+                    TopBarHome()
+                }
+                1 -> {}
+                2 -> {}
+            }
+//            Text(
+//                modifier = Modifier.padding(top = 40.dp),
+//                text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
+//                style = MaterialTheme.typography.titleLarge,
+//                color = MaterialTheme.colorScheme.onSurface
+//            )
         },
         bottomBar = {
             NavigationBar {
@@ -123,3 +148,31 @@ fun topTitle(viewModel: MainViewModel, string: String) : String
     return string
 }
 
+val topBarItems = listOf(
+    Icons.Filled.Search,
+    Icons.Filled.Bookmark,
+    Icons.Filled.Settings
+)
+
+@Composable
+fun TopBarHome()
+{
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(30.dp, 10.dp)
+            .height(70.dp)
+            .fillMaxWidth()
+    )
+    {
+        topBarItems.forEach { item ->
+            Image(
+                imageVector = item,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(25.dp, 25.dp)
+            )
+        }
+    }
+}

@@ -57,6 +57,15 @@ fun HomePage(navController: NavController, viewModel: MainViewModel = viewModel(
             {
                 Text("Przeczytaj")
             }
+
+            Button(onClick = {
+                viewModel.changeSettingUiState(true)
+            })
+            {
+                Text("Ustawienia")
+            }
         }
+
+
     }
 }

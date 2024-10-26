@@ -11,6 +11,7 @@ import androidx.compose.material.icons.twotone.ImportContacts
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
@@ -169,6 +170,9 @@ class MainViewModel(context : Context) : ViewModel()
             )
             _topSelectionState.value = userSelection1
             _bottomSelectionState.value = userSelection2
+
+            _darkMode.value = read_settings("dark_mode") ?: false
+            _dynamicColor.value = read_settings("dynamic_color") ?: false
         }
     }
 
@@ -230,11 +234,48 @@ class MainViewModel(context : Context) : ViewModel()
         }
     }
 
+    // SETTINGS
+
+    private val _settingsUiState = MutableStateFlow<Boolean>(false)
+
+    val settingsUiState: StateFlow<Boolean> = _settingsUiState.asStateFlow()
+
+    fun changeSettingUiState(value : Boolean)
+    {
+        _settingsUiState.update { value }
+    }
+
+    /** Stores dark mode bool is selected*/
+    private val _darkMode = MutableStateFlow<Boolean>(false)
+
+    val darkMode: StateFlow<Boolean> = _darkMode.asStateFlow()
+
+    fun updateDarkTheme(value : Boolean)
+    {
+        _darkMode.update { value }
+        viewModelScope.launch {
+            save("dark_mode", value)
+        }
+    }
+
+    /** Stores dark mode bool is selected*/
+    private val _dynamicColor = MutableStateFlow<Boolean>(false)
+
+    val dynamicColor: StateFlow<Boolean> = _dynamicColor.asStateFlow()
+
+    fun updateDynamicColorPreference(value : Boolean)
+    {
+        _dynamicColor.update { value }
+        viewModelScope.launch {
+            save("dynamic_color", value)
+        }
+    }
+
     /**
      * Function used to save value to a specified key
      *
      * @param key - unique, identifying key of a Preference
-     * @param value - value to store in key
+     * @param value - value to store in key (String)
      */
     private suspend fun save(key: String, value: String)
     {
@@ -253,6 +294,33 @@ class MainViewModel(context : Context) : ViewModel()
     private suspend fun read(key: String) : String?
     {
         val dataStoreKey = stringPreferencesKey(key)
+        val preferences = dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
+
+    /**
+     * Function used to save value to a specified key
+     *
+     * @param key - unique, identifying key of a Preference
+     * @param value - value to store in key (Boolean)
+     */
+    private suspend fun save(key: String, value: Boolean)
+    {
+        val dataStoreKey = booleanPreferencesKey(key)
+        dataStore.edit {
+            it[dataStoreKey] = value
+        }
+    }
+
+    /**
+     * Function used to read settings with value from a specified key
+     *
+     * @param key - unique, identifying key of a Preference
+     * @return nullable Boolean - so if there is no value returns null
+     */
+    private suspend fun read_settings(key: String) : Boolean?
+    {
+        val dataStoreKey = booleanPreferencesKey(key)
         val preferences = dataStore.data.first()
         return preferences[dataStoreKey]
     }
