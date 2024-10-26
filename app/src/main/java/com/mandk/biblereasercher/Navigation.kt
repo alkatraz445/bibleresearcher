@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -68,15 +69,18 @@ fun Navigation(
                     0 -> {
                         TopBarHome()
                     }
-                    1 -> {}
+                    1 -> {
+                        Text(
+                            modifier = Modifier.padding(top = 40.dp),
+                            text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
+                            // TODO change style
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                     2 -> {}
                 }
-//            Text(
-//                modifier = Modifier.padding(top = 40.dp),
-//                text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
-//                style = MaterialTheme.typography.titleLarge,
-//                color = MaterialTheme.colorScheme.onSurface
-//            )
+
             },
             bottomBar = {
                 NavigationBar {
