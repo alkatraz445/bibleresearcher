@@ -16,6 +16,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mandk.biblereasercher.utils.AppDatabase
+import com.mandk.biblereasercher.utils.Bookmark
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -60,12 +62,47 @@ data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem
  *
  * @param context - Context in which DataStore<Preferences> can be created; without it saves wouldn't work
  */
-class MainViewModel(context : Context) : ViewModel()
+class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
 {
+    /** where preferences are stored*/
     private var dataStore: DataStore<Preferences> = createDataStore(context)
 
+    private val _dbDao = dataBase.bookmarksDao()
+
+    fun addBookmark(value: UserSelection)
+    {
+        viewModelScope.launch {
+            val bookmark = Bookmark(
+                _dbDao.getBookmarkCount(),
+                translationName = value.translation?.name,
+                translationUrl = value.translation?.url,
+                bookAbbrName = value.book?.abbrName,
+                bookUrl = value.book?.url,
+                testament = value.testament,
+                chapter = value.chapter
+            )
+            _dbDao.insertOne(bookmark)
+        }
+
+    }
+
+    fun removeBookmark(index: Int)
+    {
+        viewModelScope.launch {
+            _dbDao.delete(_dbDao.loadById(index))
+        }
+    }
+
+    fun getAllBookmarks() : List<Bookmark> {
+        var temp : List<Bookmark> = listOf()
+        viewModelScope.launch {
+            temp = _dbDao.getAll()
+        }
+        return temp
+    }
+
     /** Stores which Tab is selected*/
-    private val _selectedTab = MutableStateFlow<Int>(0)
+    private val _selectedTab = MutableStateFlow(0)
 
     /** Stores which Tab is selected, but is mutable and public*/
     val selectedTab: StateFlow<Int> = _selectedTab.asStateFlow()
