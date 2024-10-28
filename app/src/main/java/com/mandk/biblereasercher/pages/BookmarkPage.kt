@@ -38,7 +38,7 @@ fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                         Spacer(modifier = Modifier.padding(8.dp))
-                        IconButton(onClick = TODO()) { }
+                        IconButton(onClick = {}) { }
                     }
                 }
             }
@@ -48,8 +48,6 @@ fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
 
 @Composable
 fun BookmarkPage(navController: NavController, viewModel: MainViewModel) {
-    val topSelection by viewModel.topSelectionState.collectAsStateWithLifecycle()
-    val bottomSelection by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
     BookmarkList(modifier = Modifier, viewModel)
 }
 
