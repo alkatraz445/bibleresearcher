@@ -148,6 +148,8 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
             val bookmark = Bookmark(
                 translationName = value.translation?.name,
                 translationUrl = value.translation?.url,
+                bookIndex = value.book?.index,
+                bookName = value.book?.fullName,
                 bookAbbrName = value.book?.abbrName,
                 bookUrl = value.book?.url,
                 testament = value.testament,
@@ -286,6 +288,28 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
         }
     }
 
+    fun updateTopSelection(value : Bookmark)
+    {
+        _topSelectionState.update { currentState ->
+            currentState.copy(
+                translation = Translation(value.translationName, value.translationUrl),
+                testament = value.testament,
+                book = Book(value.bookIndex, value.bookName, value.bookAbbrName, value.bookUrl),
+                chapter = value.chapter
+            )
+        }
+        viewModelScope.launch {
+            save("top_selection_translation_name",  value.translationName ?: "")
+            save("top_selection_translation_url",   value.translationUrl ?: "")
+            save("top_selection_testament",         value.testament?: "")
+            save("top_selection_book_index",        value.bookIndex.toString())
+            save("top_selection_book_name",         value.bookName ?: "")
+            save("top_selection_book_name_abbr",    value.bookAbbrName ?: "")
+            save("top_selection_url",               value.bookUrl?: "")
+            save("top_selection_chapter",           value.chapter?: "")
+        }
+    }
+
     /**
      * Function used to:
      * - update bottom selection
@@ -311,6 +335,32 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
             save("bottom_selection_book_name",         value.book?.fullName ?: "")
             save("bottom_selection_book_name_abbr",    value.book?.abbrName ?: "")
             save("bottom_selection_url",               value.book?.url?: "")
+            save("bottom_selection_chapter",           value.chapter?: "")
+        }
+    }
+
+
+    fun updateBottomSelection(value : Bookmark)
+    {
+//        val scraper : Scraper = ScraperClass()
+        _bottomSelectionState.update { currentState ->
+            // scrape for book in order to match the bookmarks book
+//            scraper.scrapeForBook(navController, viewModel, )
+            currentState.copy(
+                translation = currentState.translation,
+                testament = currentState.testament,
+                book = Book(value.bookIndex, value.bookName, value.bookAbbrName, value.bookUrl),
+                chapter = value.chapter
+            )
+        }
+        viewModelScope.launch {
+            save("bottom_selection_translation_name",  value.translationName ?: "")
+            save("bottom_selection_translation_url",   value.translationUrl ?: "")
+            save("bottom_selection_testament",         value.testament?: "")
+            save("bottom_selection_book_index",        value.bookIndex.toString())
+            save("bottom_selection_book_name",         value.bookName ?: "")
+            save("bottom_selection_book_name_abbr",    value.bookAbbrName ?: "")
+            save("bottom_selection_url",               value.bookUrl?: "")
             save("bottom_selection_chapter",           value.chapter?: "")
         }
     }

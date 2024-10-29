@@ -1,6 +1,7 @@
 package com.mandk.biblereasercher.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,19 +23,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.mandk.biblereasercher.MainViewModel
+import com.mandk.biblereasercher.ReaderScreen
 import com.mandk.biblereasercher.utils.Bookmark
 import kotlinx.coroutines.launch
 
 @Composable
-fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
+fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavController){
 
     val allBookmarks by viewModel.allBookmarks.collectAsStateWithLifecycle(initialValue = emptyList())
 
@@ -53,7 +54,7 @@ fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
                 // index needed to remove bookmark by index
                 allBookmarks.forEach { bookmark ->
                     // TODO instead of row it needs to be a card with (-) button on the right and some sort of a divider
-                    BookmarkCard(viewModel, bookmark)
+                    BookmarkCard(navController, viewModel, bookmark)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
@@ -63,12 +64,14 @@ fun BookmarkList(modifier: Modifier = Modifier, viewModel: MainViewModel){
 
 @Composable
 fun BookmarkPage(navController: NavController, viewModel: MainViewModel) {
-    BookmarkList(modifier = Modifier, viewModel)
+    BookmarkList(modifier = Modifier, viewModel, navController)
 }
 
 @Composable
-fun BookmarkCard(viewModel : MainViewModel, bookmark: Bookmark)
+fun BookmarkCard(navController: NavController, viewModel : MainViewModel, bookmark: Bookmark)
 {
+
+
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color = MaterialTheme.colorScheme.secondary),
@@ -81,6 +84,20 @@ fun BookmarkCard(viewModel : MainViewModel, bookmark: Bookmark)
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.align(Alignment.CenterVertically)
                 .padding(start = 10.dp)
+                .clickable {
+                    viewModel.changeComparisonBoxState(false)
+                    viewModel.updateTopSelection(bookmark)
+                    viewModel.updateBottomSelection(bookmark)
+                    viewModel.changeSelectedTab(1)
+                    navController.navigate(ReaderScreen)
+                    {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
         )
         IconButton(
             modifier = Modifier.alignByBaseline(), // Aligns text by baseline
@@ -94,8 +111,8 @@ fun BookmarkCard(viewModel : MainViewModel, bookmark: Bookmark)
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
-@Composable
-fun BookmarkListPreview() {
-    BookmarkList(modifier = Modifier, viewModel())
-}
+//@Preview(showBackground = true, widthDp = 320)
+//@Composable
+//fun BookmarkListPreview() {
+//    BookmarkList(modifier = Modifier, viewModel())
+//}

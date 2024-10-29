@@ -24,3 +24,6 @@ object ReaderScreen : Screen
  */
 @Serializable
 object BookmarkScreen : Screen
+
+@Serializable
+object ErrorScreen : Screen

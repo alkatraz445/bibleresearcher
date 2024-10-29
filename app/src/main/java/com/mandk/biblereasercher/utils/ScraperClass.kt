@@ -1,11 +1,12 @@
-package com.mandk.biblereasercher.utils
+package com.mandk.biblereasercher.pages
+
 
 import android.util.Log
 import androidx.compose.runtime.Composable
 import com.mandk.biblereasercher.Book
 import com.mandk.biblereasercher.Translation
 import com.mandk.biblereasercher.UserSelection
-import com.mandk.biblereasercher.pages.ErrorPage
+import com.mandk.biblereasercher.utils.Scraper
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
