@@ -5,8 +5,12 @@ import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.sharp.ImportContacts
 import androidx.compose.material.icons.twotone.ImportContacts
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -55,6 +59,13 @@ data class BottomNavigationItem(
     val badgeCount: Int? = null
 )
 
+data class TopBarItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val onClickEvent : () -> Unit
+)
+
 data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem, val route: T)
 
 /**
@@ -66,6 +77,60 @@ data class TopLevelRoute<T : Any>(val bottomNavigationItem: BottomNavigationItem
  */
 class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
 {
+    /** value with a list of all routes in the Navigation*/
+    val topLevelRoutes = listOf(
+        TopLevelRoute(
+            BottomNavigationItem(
+                title = "Dom",
+                selectedIcon = Icons.Filled.Home,
+                unselectedIcon = Icons.Outlined.Home,
+                hasNews = false
+            ),
+            HomeScreen
+        ),
+        TopLevelRoute(
+            BottomNavigationItem(
+                title = "Pismo",
+                selectedIcon = Icons.Sharp.ImportContacts,
+                unselectedIcon = Icons.TwoTone.ImportContacts,
+                hasNews = false
+            ),
+            ReaderScreen
+        ),
+        TopLevelRoute(
+            BottomNavigationItem(
+                title = "Zakładki",
+                selectedIcon = Icons.Filled.Bookmarks,
+                unselectedIcon = Icons.Outlined.Bookmarks,
+                hasNews = false
+            ),
+            BookmarkScreen
+        ),
+    )
+
+    val topBarOptions = listOf(
+        TopBarItem(
+            title = "Search",
+            selectedIcon = Icons.Filled.Search,
+            unselectedIcon = Icons.Outlined.Search,
+            onClickEvent = {}
+        ),
+        TopBarItem(
+            title = "Bookmark",
+            selectedIcon = Icons.Filled.Bookmarks,
+            unselectedIcon = Icons.Outlined.Bookmarks,
+            onClickEvent = {
+                addBookmark(topSelectionState.value)
+            }
+        ),
+        TopBarItem(
+            title = "Settings",
+            selectedIcon = Icons.Filled.Settings,
+            unselectedIcon = Icons.Outlined.Settings,
+            onClickEvent = { changeSettingUiState(true) }
+        )
+    )
+
     /** where preferences are stored*/
     private var dataStore: DataStore<Preferences> = createDataStore(context)
 
@@ -100,6 +165,16 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
         }
     }
 
+    private val _checkedComparisonBox = MutableStateFlow(true)
+
+    val checkedComparisonBox = _checkedComparisonBox.asStateFlow()
+
+    fun changeComparisonBoxState(value : Boolean)
+    {
+        _checkedComparisonBox.update {
+            value
+        }
+    }
 
     /** Stores which Tab is selected*/
     private val _selectedTab = MutableStateFlow(0)
@@ -116,37 +191,6 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
     {
         _selectedTab.update { value }
     }
-
-    /** variable with a list of all routes in the Navigation*/
-    val topLevelRoutes = listOf(
-        TopLevelRoute(
-            BottomNavigationItem(
-                title = "Dom",
-                selectedIcon = Icons.Filled.Home,
-                unselectedIcon = Icons.Outlined.Home,
-                hasNews = false
-            ),
-            HomeScreen
-        ),
-        TopLevelRoute(
-            BottomNavigationItem(
-                title = "Pismo",
-                selectedIcon = Icons.Sharp.ImportContacts,
-                unselectedIcon = Icons.TwoTone.ImportContacts,
-                hasNews = false
-            ),
-            ReaderScreen
-        ),
-        TopLevelRoute(
-            BottomNavigationItem(
-                title = "Zakładki",
-                selectedIcon = Icons.Filled.Bookmarks,
-                unselectedIcon = Icons.Outlined.Bookmarks,
-                hasNews = false
-            ),
-            BookmarkScreen
-        ),
-    )
 
     /** Top selection state of HomePage */
     private val _topSelectionState = MutableStateFlow(

@@ -2,31 +2,23 @@ package com.mandk.biblereasercher
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -75,31 +67,7 @@ fun Navigation(
             modifier = Modifier.padding(top = 50.dp),
             topBar = {
                 // different top bars for each selectedTab
-                when (selectedTab){
-                    0 -> {
-                        TopBarHome()
-                    }
-                    1 -> {
-                        Text(
-                            modifier = Modifier.padding(top = 40.dp),
-                            text = topTitle(viewModel, viewModel.topLevelRoutes[selectedTab].bottomNavigationItem.title),
-                            // TODO change style
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                    2 -> {
-                        IconButton(
-                            onClick = {
-                                viewModel.addBookmark(viewModel.topSelectionState.value)
-                            },
-                            content = { Icon(
-                                imageVector = Icons.Outlined.Bookmark,
-                                contentDescription = "bookmark_button") }
-                        )
-                    }
-                }
-
+                TopBar(viewModel)
             },
             bottomBar = {
                 NavigationBar {
@@ -157,7 +125,6 @@ fun Navigation(
                 composable<BookmarkScreen> {
                     BookmarkPage(navController, viewModel)
                 }
-
             }
         }
     }
@@ -184,25 +151,31 @@ val topBarItems = listOf(
     Icons.Filled.Settings
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarHome()
+fun TopBar(viewModel: MainViewModel)
 {
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(30.dp, 10.dp)
-            .height(70.dp)
-            .fillMaxWidth()
-    )
-    {
-        topBarItems.forEach { item ->
-            Image(
-                imageVector = item,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(25.dp, 25.dp)
-            )
+    val selection = viewModel.selectedTab.collectAsStateWithLifecycle().value
+
+    TopAppBar(
+        title = { Text(topTitle(viewModel, viewModel.topLevelRoutes[selection].bottomNavigationItem.title)) },
+        actions = {
+            // Search button (always shown)
+            if(selection == 0 || selection == 1){
+                IconButton(onClick = viewModel.topBarOptions[0].onClickEvent) {
+                    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                }
+            }
+            // Bookmark button (conditionally shown)
+            if (selection == 1) {
+                IconButton(onClick = viewModel.topBarOptions[1].onClickEvent) {
+                    Icon(imageVector = Icons.Filled.Bookmark, contentDescription = "Bookmark")
+                }
+            }
+            // Settings button (always shown)
+            IconButton(onClick = viewModel.topBarOptions[2].onClickEvent) {
+                Icon(imageVector = Icons.Filled.Settings, contentDescription = "Settings")
+            }
         }
-    }
+    )
 }

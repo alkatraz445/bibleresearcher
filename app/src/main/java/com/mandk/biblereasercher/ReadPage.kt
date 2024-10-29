@@ -33,6 +33,7 @@ import com.mandk.biblereasercher.utils.ScraperClass
 @Composable
 fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
 
+    // TODO scroll state needs to be saved across callbacks but not for new selections
     val scrollState = ScrollState(0)
 
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
