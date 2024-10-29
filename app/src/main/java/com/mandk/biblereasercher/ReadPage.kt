@@ -2,6 +2,7 @@ package com.mandk.biblereasercher
 
 import android.util.Log
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,109 +28,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import it.skrape.core.htmlDocument
-import it.skrape.fetcher.HttpFetcher
-import it.skrape.fetcher.response
-import it.skrape.fetcher.skrape
-
-fun skrapeText(selectedValue : UserSelection) : String {
-    var textOnScreen = ""
-    skrape(HttpFetcher) {
-        // make an HTTP GET request to the specified URL
-        request {
-            // TODO Has to be dynamically changed by the user
-            val temp = "http://biblia-online.pl/${selectedValue.book?.url}"
-            url = temp.substring(0, temp.length - 4) + "/${selectedValue.chapter}"
-            Log.d("connected at", url)
-        }
-        response {
-            htmlDocument {
-                "div.vr" {
-                    findAll {
-                        forEach {
-                            val text = it.findFirst(".vtbl-txt").text
-                            val nr = it.findFirst(".vtbl-num").text
-                            textOnScreen += "$nr: $text\n"
-//                            werset = Werset(
-//                                text = text,
-//                                nr = nr
-//                            )
-//                            rozdzial.add(werset)
-//                            werset.printWerset()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return textOnScreen
-}
+import com.mandk.biblereasercher.utils.Scraper
+import com.mandk.biblereasercher.utils.ScraperClass
 
 @Composable
 fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
-//    val rozdzial: MutableList<Werset> = ArrayList()
-//    var werset: Werset
-    val scrollState = ScrollState(0)
+
+    // TODO scroll state needs to be saved across callbacks but not for new selections
+    var scrollState = ScrollState(0)
 
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val selectedValue2 by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
 
-    var textOnScreen1 by remember { mutableStateOf(skrapeText(selectedValue1)) }
-    var textOnScreen2 by remember { mutableStateOf(skrapeText(selectedValue2)) }
-//    skrape(HttpFetcher) {
-//        // make an HTTP GET request to the specified URL
-//        request {
-//            // TODO Has to be dynamically changed by the user
-//            val temp = "http://biblia-online.pl/${selectedValue1.book.url}"
-//            url = temp.substring(0, temp.length-4) + "/${selectedValue1.chapter}"
-//            Log.d("connected at", url)
-//        }
-//        response {
-//            htmlDocument {
-//                "div.vr" {
-//                    findAll {
-//                        forEach {
-//                            val text = it.findFirst(".vtbl-txt").text
-//                            val nr = it.findFirst(".vtbl-num").text
-//                            textOnScreen1 += "$nr: $text\n"
-////                            werset = Werset(
-////                                text = text,
-////                                nr = nr
-////                            )
-////                            rozdzial.add(werset)
-////                            werset.printWerset()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        request {
-//            // TODO Has to be dynamically changed by the user
-//            val temp = "http://biblia-online.pl/${selectedValue2.book.url}"
-//            url = temp.substring(0, temp.length-4) + "/${selectedValue2.chapter}"
-//            Log.d("connected at", url)
-//        }
-//        response {
-//            htmlDocument {
-//                "div.vr" {
-//                    findAll {
-//                        forEach {
-//                            val text = it.findFirst(".vtbl-txt").text
-//                            val nr = it.findFirst(".vtbl-num").text
-//                            textOnScreen2 += "$nr: $text\n"
-////                            werset = Werset(
-////                                text = text,
-////                                nr = nr
-////                            )
-////                            rozdzial.add(werset)
-////                            werset.printWerset()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    val scraper : Scraper = ScraperClass()
 
+    var textOnScreen1 by remember { mutableStateOf(scraper.skrapeText(selectedValue1)) }
+    var textOnScreen2 by remember { mutableStateOf(scraper.skrapeText(selectedValue2)) }
+
+    val comparisonModeOn = viewModel.checkedComparisonBox.collectAsStateWithLifecycle()
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -143,8 +59,9 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) - 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
-                textOnScreen1 =  skrapeText(selectedValue1)
-                textOnScreen2 = skrapeText(selectedValue2)
+                textOnScreen1 = scraper.skrapeText(selectedValue1)
+                textOnScreen2 = scraper.skrapeText(selectedValue2)
+                scrollState = ScrollState(0)
             },
             onSwipeLeft =
             {
@@ -153,12 +70,11 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) + 1).toString()
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
-                textOnScreen1 =  skrapeText(selectedValue1)
-                textOnScreen2 = skrapeText(selectedValue2)
+                textOnScreen1 = scraper.skrapeText(selectedValue1)
+                textOnScreen2 = scraper.skrapeText(selectedValue2)
+                scrollState = ScrollState(0)
             })
         {
-
-
             Column(
                 modifier = Modifier
                     .padding(horizontal = 30.dp, vertical = 30.dp)
@@ -166,7 +82,10 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Surface(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
+                        .clickable {
+                        viewModel.changeComparisonBoxState(!comparisonModeOn.value)
+                    },
                     shape = MaterialTheme.shapes.extraLarge,
                     color = MaterialTheme.colorScheme.secondary,
                 ) {
@@ -186,12 +105,12 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
-                                text = "Biblia ${selectedValue1.translation}"
+                                text = "${selectedValue1.translation?.name}"
                             )
                             Text(
                                 modifier = Modifier
                                     .verticalScroll(scrollState),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.displaySmall,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 text = textOnScreen1,
                             )
@@ -201,36 +120,43 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
 
                 Spacer(modifier = Modifier.padding(10.dp))
 
-                Surface(
-                    modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    color = MaterialTheme.colorScheme.secondary,
-                ) {
+                if(comparisonModeOn.value) {
                     Surface(
-                        shape = RectangleShape,
+                        modifier = Modifier.weight(1f)
+                            .clickable {
+                                viewModel.changeComparisonBoxState(!comparisonModeOn.value)
+                                // swap values
+                                viewModel.swapSelections()
+                            },
+                        shape = MaterialTheme.shapes.extraLarge,
                         color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.padding(all = 20.dp)
                     ) {
-                        Box(
-                            Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                        Surface(
+                            shape = RectangleShape,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.padding(all = 20.dp)
                         ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .alpha(0.08f),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                text = "Biblia ${selectedValue2.translation}"
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .verticalScroll(scrollState),
-                                text = textOnScreen2,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                            Box(
+                                Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .alpha(0.08f),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    text = "${selectedValue2.translation?.name}"
+                                )
+                                Text(
+                                    modifier = Modifier
+                                        .verticalScroll(scrollState),
+                                    text = textOnScreen2,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    style = MaterialTheme.typography.displaySmall
+                                )
+                            }
                         }
                     }
                 }
