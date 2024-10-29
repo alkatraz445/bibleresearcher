@@ -315,6 +315,14 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
         }
     }
 
+    fun swapSelections()
+    {
+        val temp = topSelectionState.value
+        updateTopSelection(bottomSelectionState.value)
+        updateBottomSelection(temp)
+
+    }
+
     // SETTINGS
 
     private val _settingsUiState = MutableStateFlow<Boolean>(false)

@@ -2,6 +2,7 @@ package com.mandk.biblereasercher
 
 import android.util.Log
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +35,7 @@ import com.mandk.biblereasercher.utils.ScraperClass
 fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
 
     // TODO scroll state needs to be saved across callbacks but not for new selections
-    val scrollState = ScrollState(0)
+    var scrollState = ScrollState(0)
 
     val selectedValue1 by viewModel.topSelectionState.collectAsStateWithLifecycle()
     val selectedValue2 by viewModel.bottomSelectionState.collectAsStateWithLifecycle()
@@ -44,6 +45,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
     var textOnScreen1 by remember { mutableStateOf(scraper.skrapeText(selectedValue1)) }
     var textOnScreen2 by remember { mutableStateOf(scraper.skrapeText(selectedValue2)) }
 
+    val comparisonModeOn = viewModel.checkedComparisonBox.collectAsStateWithLifecycle()
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,6 +61,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
+                scrollState = ScrollState(0)
             },
             onSwipeLeft =
             {
@@ -69,10 +72,9 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
+                scrollState = ScrollState(0)
             })
         {
-
-
             Column(
                 modifier = Modifier
                     .padding(horizontal = 30.dp, vertical = 30.dp)
@@ -80,7 +82,10 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Surface(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
+                        .clickable {
+                        viewModel.changeComparisonBoxState(!comparisonModeOn.value)
+                    },
                     shape = MaterialTheme.shapes.extraLarge,
                     color = MaterialTheme.colorScheme.secondary,
                 ) {
@@ -115,36 +120,43 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
 
                 Spacer(modifier = Modifier.padding(10.dp))
 
-                Surface(
-                    modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.extraLarge,
-                    color = MaterialTheme.colorScheme.secondary,
-                ) {
+                if(comparisonModeOn.value) {
                     Surface(
-                        shape = RectangleShape,
+                        modifier = Modifier.weight(1f)
+                            .clickable {
+                                viewModel.changeComparisonBoxState(!comparisonModeOn.value)
+                                // swap values
+                                viewModel.swapSelections()
+                            },
+                        shape = MaterialTheme.shapes.extraLarge,
                         color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.padding(all = 20.dp)
                     ) {
-                        Box(
-                            Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                        Surface(
+                            shape = RectangleShape,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.padding(all = 20.dp)
                         ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .alpha(0.08f),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                text = "${selectedValue2.translation?.name}"
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .verticalScroll(scrollState),
-                                text = textOnScreen2,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                style = MaterialTheme.typography.displaySmall
-                            )
+                            Box(
+                                Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .alpha(0.08f),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    text = "${selectedValue2.translation?.name}"
+                                )
+                                Text(
+                                    modifier = Modifier
+                                        .verticalScroll(scrollState),
+                                    text = textOnScreen2,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    style = MaterialTheme.typography.displaySmall
+                                )
+                            }
                         }
                     }
                 }

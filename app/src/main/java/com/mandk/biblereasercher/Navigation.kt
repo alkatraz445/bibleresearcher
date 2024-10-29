@@ -156,18 +156,18 @@ val topBarItems = listOf(
 fun TopBar(viewModel: MainViewModel)
 {
     val selection = viewModel.selectedTab.collectAsStateWithLifecycle().value
-
+    val comparisonModeOn = viewModel.checkedComparisonBox.collectAsStateWithLifecycle().value
     TopAppBar(
         title = { Text(topTitle(viewModel, viewModel.topLevelRoutes[selection].bottomNavigationItem.title)) },
         actions = {
-            // Search button (always shown)
+
             if(selection == 0 || selection == 1){
                 IconButton(onClick = viewModel.topBarOptions[0].onClickEvent) {
                     Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
                 }
             }
-            // Bookmark button (conditionally shown)
-            if (selection == 1) {
+
+            if (selection == 1 && !comparisonModeOn) {
                 IconButton(onClick = viewModel.topBarOptions[1].onClickEvent) {
                     Icon(imageVector = Icons.Filled.Bookmark, contentDescription = "Bookmark")
                 }
