@@ -27,8 +27,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.compose.AppTheme
 import com.mandk.biblereasercher.pages.BookmarkPage
+import com.mandk.biblereasercher.pages.ErrorPage
 import com.mandk.biblereasercher.utils.AppDatabase
 
 class Werset(var text: String, var nr: String) {
@@ -44,14 +47,26 @@ fun Navigation(
 ) {
     val navController = rememberNavController()
 
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // SQL statement to add a new column
+            db.execSQL("ALTER TABLE Bookmark ADD COLUMN bookIndex INTEGER")
+            db.execSQL("ALTER TABLE Bookmark ADD COLUMN bookName TEXT")
+        }
+    }
+
     val dataBase = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
         "bookmarks"
-        ).build()
+        )
+        .addMigrations(MIGRATION_1_2)
+        .build()
 
     val viewModel = remember { MainViewModel(context, dataBase = dataBase) }
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
+    val selectedValue by viewModel.topSelectionState.collectAsStateWithLifecycle()
+    val comparisonModeOn by viewModel.checkedComparisonBox.collectAsStateWithLifecycle()
 
     AppTheme(
         darkTheme = viewModel.darkMode.collectAsStateWithLifecycle().value,
@@ -67,7 +82,17 @@ fun Navigation(
             modifier = Modifier.padding(top = 50.dp),
             topBar = {
                 // different top bars for each selectedTab
-                TopBar(viewModel)
+                if(viewModel.chapterUpdated.collectAsStateWithLifecycle().value)
+                {
+                    Log.d("false chapter updated", selectedValue.chapter?:"")
+                    viewModel.setChapterUpdated(false)
+                    TopBar(viewModel, selectedValue, selectedTab, comparisonModeOn)
+                }
+                else
+                {
+                    TopBar(viewModel, selectedValue, selectedTab, comparisonModeOn)
+                }
+
             },
             bottomBar = {
                 NavigationBar {
@@ -125,16 +150,19 @@ fun Navigation(
                 composable<BookmarkScreen> {
                     BookmarkPage(navController, viewModel)
                 }
+
+                composable<ErrorScreen> {
+                    ErrorPage()
+                }
             }
         }
     }
 
 }
 
-fun topTitle(viewModel: MainViewModel, string: String) : String
+fun topTitle(selectedValue: UserSelection, string: String) : String
 {
-    val selectedValue = viewModel.topSelectionState.value
-
+//    val selectedValue = viewModel.topSelectionState.value
     when(string)
     {
         "Dom" -> return "Bible Researcher"
@@ -145,34 +173,27 @@ fun topTitle(viewModel: MainViewModel, string: String) : String
     return string
 }
 
-val topBarItems = listOf(
-    Icons.Filled.Search,
-    Icons.Filled.Bookmark,
-    Icons.Filled.Settings
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(viewModel: MainViewModel)
-{
-    val selection = viewModel.selectedTab.collectAsStateWithLifecycle().value
-    val comparisonModeOn = viewModel.checkedComparisonBox.collectAsStateWithLifecycle().value
+fun TopBar(viewModel: MainViewModel, selectedValue: UserSelection, selection: Int, comparisonModeOn: Boolean) {
+    val title = topTitle(selectedValue, viewModel.topLevelRoutes[selection].bottomNavigationItem.title)
+    Log.d("title", title)
     TopAppBar(
-        title = { Text(topTitle(viewModel, viewModel.topLevelRoutes[selection].bottomNavigationItem.title)) },
+        title = {
+            Text(title)
+        },
         actions = {
-
-            if(selection == 0 || selection == 1){
+            if (selection == 0 || selection == 1) {
                 IconButton(onClick = viewModel.topBarOptions[0].onClickEvent) {
                     Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
                 }
             }
-
             if (selection == 1 && !comparisonModeOn) {
                 IconButton(onClick = viewModel.topBarOptions[1].onClickEvent) {
                     Icon(imageVector = Icons.Filled.Bookmark, contentDescription = "Bookmark")
                 }
             }
-            // Settings button (always shown)
+            // Always shown settings button
             IconButton(onClick = viewModel.topBarOptions[2].onClickEvent) {
                 Icon(imageVector = Icons.Filled.Settings, contentDescription = "Settings")
             }

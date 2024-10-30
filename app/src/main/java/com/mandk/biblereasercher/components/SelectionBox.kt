@@ -25,8 +25,8 @@ import androidx.compose.ui.window.PopupProperties
 import com.mandk.biblereasercher.Book
 import com.mandk.biblereasercher.Translation
 import com.mandk.biblereasercher.UserSelection
+import com.mandk.biblereasercher.pages.ScraperClass
 import com.mandk.biblereasercher.utils.Scraper
-import com.mandk.biblereasercher.utils.ScraperClass
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

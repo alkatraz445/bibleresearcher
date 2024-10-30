@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.mandk.biblereasercher.pages.ScraperClass
 import com.mandk.biblereasercher.utils.Scraper
-import com.mandk.biblereasercher.utils.ScraperClass
 
 @Composable
 fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel()) {
@@ -57,22 +57,26 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 Log.d("r", "right")
                 selectedValue1.chapter = ((selectedValue1.chapter?.toInt()?: 0) - 1).toString()
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) - 1).toString()
+                Log.d("sv1 chapter", selectedValue1.chapter!!)
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
                 scrollState = ScrollState(0)
+                viewModel.setChapterUpdated(true)
             },
             onSwipeLeft =
             {
                 Log.d("l", "left")
                 selectedValue1.chapter = ((selectedValue1.chapter?.toInt()?: 0) + 1).toString()
                 selectedValue2.chapter = ((selectedValue2.chapter?.toInt()?: 0) + 1).toString()
+                Log.d("sv1 chapter", selectedValue1.chapter!!)
                 viewModel.updateTopSelection(selectedValue1)
                 viewModel.updateBottomSelection(selectedValue2)
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
                 scrollState = ScrollState(0)
+                viewModel.setChapterUpdated(true)
             })
         {
             Column(

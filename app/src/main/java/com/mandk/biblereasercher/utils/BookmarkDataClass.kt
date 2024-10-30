@@ -16,6 +16,8 @@ data class Bookmark(
     val translationName: String?,
     val translationUrl: String?,
     val testament: String?,
+    val bookIndex : Int?,
+    val bookName : String?,
     val bookAbbrName : String?,
     val bookUrl : String?,
     val chapter: String?,
