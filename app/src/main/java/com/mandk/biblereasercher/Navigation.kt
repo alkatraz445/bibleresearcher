@@ -82,7 +82,17 @@ fun Navigation(
             modifier = Modifier.padding(top = 50.dp),
             topBar = {
                 // different top bars for each selectedTab
-                TopBar(viewModel, selectedValue, selectedTab, comparisonModeOn)
+                if(viewModel.chapterUpdated.collectAsStateWithLifecycle().value)
+                {
+                    Log.d("false chapter updated", selectedValue.chapter?:"")
+                    viewModel.setChapterUpdated(false)
+                    TopBar(viewModel, selectedValue, selectedTab, comparisonModeOn)
+                }
+                else
+                {
+                    TopBar(viewModel, selectedValue, selectedTab, comparisonModeOn)
+                }
+
             },
             bottomBar = {
                 NavigationBar {
@@ -167,6 +177,7 @@ fun topTitle(selectedValue: UserSelection, string: String) : String
 @Composable
 fun TopBar(viewModel: MainViewModel, selectedValue: UserSelection, selection: Int, comparisonModeOn: Boolean) {
     val title = topTitle(selectedValue, viewModel.topLevelRoutes[selection].bottomNavigationItem.title)
+    Log.d("title", title)
     TopAppBar(
         title = {
             Text(title)

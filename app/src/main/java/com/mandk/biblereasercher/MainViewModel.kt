@@ -219,6 +219,15 @@ class MainViewModel(context : Context, dataBase: AppDatabase) : ViewModel()
     /** Bottom selection state of HomePage, but public */
     val bottomSelectionState: StateFlow<UserSelection> = _bottomSelectionState.asStateFlow()
 
+    private val _chapterUpdated = MutableStateFlow(false)
+
+    val chapterUpdated : StateFlow<Boolean> = _chapterUpdated.asStateFlow()
+
+    fun setChapterUpdated(value: Boolean) {
+        _chapterUpdated.update { value }
+    }
+
+
     init {
         viewModelScope.launch {
             val userSelection1 = UserSelection(

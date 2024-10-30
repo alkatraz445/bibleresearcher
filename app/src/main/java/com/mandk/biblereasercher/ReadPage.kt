@@ -63,6 +63,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
                 scrollState = ScrollState(0)
+                viewModel.setChapterUpdated(true)
             },
             onSwipeLeft =
             {
@@ -75,6 +76,7 @@ fun ReadPage(navController: NavController, viewModel: MainViewModel = viewModel(
                 textOnScreen1 = scraper.skrapeText(selectedValue1)
                 textOnScreen2 = scraper.skrapeText(selectedValue2)
                 scrollState = ScrollState(0)
+                viewModel.setChapterUpdated(true)
             })
         {
             Column(
