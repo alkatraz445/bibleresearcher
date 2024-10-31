@@ -1,5 +1,7 @@
 # Bibleresearcher
 
+![BibleReasercher](https://github.com/user-attachments/assets/993c2811-9aa7-43fb-988a-601e756963b8)
+
 ## Temat projektu
 Aplikacja mobilna na Androida do czytania i porównywania różnych tłumaczeń Biblii, wspierająca badania biblijne.
 
